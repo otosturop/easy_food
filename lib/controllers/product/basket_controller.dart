@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/state_manager.dart';
 
 class BasketController extends GetxController {

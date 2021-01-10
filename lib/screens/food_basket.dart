@@ -1,5 +1,6 @@
 import 'package:easy_food/controllers/product/basket_controller.dart';
 import 'package:easy_food/controllers/product/product_controller.dart';
+import 'package:easy_food/ui/foundation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +24,7 @@ class _FoodBasketState extends State<FoodBasket> {
     double total = 0;
     basketController.myBasket.forEach((e) {
       total += e.amount *
-          double.parse(productController.getProduct(e.productId)[0].price);
+          double.parse(productController.getProduct(e.productId).price);
     });
     return total.toStringAsFixed(2);
   }
@@ -37,6 +38,7 @@ class _FoodBasketState extends State<FoodBasket> {
           return ListView(
             children: [
               SizedBox(height: 15),
+              // myBasket state saçma bir şekilde güncellenmediği için böyle bir gereksiz if koydum
               if (basketController.loop.value || !basketController.loop.value)
                 for (var i in basketController.myBasket)
                   Padding(
@@ -49,20 +51,32 @@ class _FoodBasketState extends State<FoodBasket> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           ListTile(
-                            leading: Icon(
-                              Icons.food_bank_rounded,
-                              size: 36.0,
-                            ),
-                            title: Text(productController
-                                .getProduct(i.productId)[0]
-                                .name),
-                            subtitle: Text(
-                                i.extraMaterial.map((e) => e.name).toString() +
-                                    i.selectedMenu.join("")),
-                          ),
+                              leading: Icon(
+                                Icons.food_bank_rounded,
+                                size: 36.0,
+                              ),
+                              title: Text(productController
+                                  .getProduct(i.productId)
+                                  .name),
+                              subtitle: Column(
+                                children: [
+                                  if (i.extraMaterial.length > 0)
+                                    Text(i.extraMaterial
+                                        .map((e) => e.name)
+                                        .toString()),
+                                  if (i.selectedMenu.length > 0)
+                                    Text(i.selectedMenu
+                                        .map((e) => e.menuName)
+                                        .toString()),
+                                  if (i.removedMaterial.length > 0)
+                                    Text(i.removedMaterial
+                                        .map((e) => e.productMaterials)
+                                        .toString())
+                                ],
+                              )),
                           Center(
                             child: Text((double.parse(productController
-                                            .getProduct(i.productId)[0]
+                                            .getProduct(i.productId)
                                             .price) *
                                         i.amount)
                                     .toString() +
@@ -145,6 +159,10 @@ class _FoodBasketState extends State<FoodBasket> {
                         Text("Toplam Fİyat"),
                         Text(countTotalPrice()),
                       ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: FoundationButton("Confirm cart", () {}),
                     )
                   ],
                 ),

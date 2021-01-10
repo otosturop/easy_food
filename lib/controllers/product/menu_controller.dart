@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class MenuController extends GetxController {
   var isLoading = true.obs;
   var menuList = List<Data>.empty().obs;
-  var selectedMenu = [].obs;
+  var selectedMenu = List<MenuItems>.empty().obs;
   var tempMenuVal = Map<int, String>().obs;
   var productMenuItems = Map<int, Map<int, String>>().obs;
   MenuApi _api = MenuApi();
@@ -27,16 +27,28 @@ class MenuController extends GetxController {
     }
   }
 
-  addSelectedItemInMenu(menuProduct) {
-    selectedMenu.add(menuProduct);
+  addSelectedItemInMenu(menuId, menuName) {
+    selectedMenu.add(MenuItems(menuId, menuName));
   }
 
   void assignTempVal(int index, String value) {
+    List valueSplit = value.split(",");
     if (index == 00 && value == "temp") {
       tempMenuVal.clear();
     } else {
       tempMenuVal[index] = value;
-      addSelectedItemInMenu(value);
+      addSelectedItemInMenu(valueSplit[0], valueSplit[1]);
     }
   }
+
+  void clearSelectedMenu() {
+    selectedMenu.clear();
+  }
+}
+
+class MenuItems {
+  final String menuId;
+  final String menuName;
+
+  MenuItems(this.menuId, this.menuName);
 }

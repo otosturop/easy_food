@@ -23,9 +23,8 @@ class ProductApi {
     }
   }
 
-  Future<ProductModel> getAllProducts(String customerId) async {
-    final apiUrl =
-        baseUrl + "Product/getProductsList?xcustomer_id=" + customerId;
+  Future<ProductModel> getAllProducts() async {
+    final apiUrl = baseUrl + "Product/getProductsList?xcustomer_id=";
     var responseAllProducts = await client.get(apiUrl);
     if (responseAllProducts != null && responseAllProducts.statusCode == 200) {
       final resJson = jsonDecode(responseAllProducts.body);
@@ -33,7 +32,6 @@ class ProductApi {
     } else {
       debugPrint("ad");
       throw Exception("Veri Getirilemedi");
-
     }
   }
 }

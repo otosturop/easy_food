@@ -1,4 +1,5 @@
 import 'package:easy_food/controllers/customer/customer_controller.dart';
+import 'package:easy_food/controllers/product/product_controller.dart';
 import 'package:easy_food/screens/food.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,14 @@ class Customer extends StatefulWidget {
 
 class _CustomerState extends State<Customer> {
   final CustomerController customerController = Get.put(CustomerController());
+  final ProductController productController = Get.put(ProductController());
+
+  @override
+  void initState() {
+    productController.fetchAllProducts();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(body: Obx(() {

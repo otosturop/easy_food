@@ -1,5 +1,6 @@
 import 'package:easy_food/controllers/bottom_bar_controller.dart';
 import 'package:easy_food/controllers/product/basket_controller.dart';
+import 'package:easy_food/ui/foundation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_food/controllers/product/menu_controller.dart';
 import 'package:easy_food/controllers/product/product_controller.dart';
@@ -49,6 +50,8 @@ class _FoodDetailState extends State<FoodDetail> {
     //basket initial
     basketController.getProductAmount(widget.product.frmProductId, "1");
     menuController.assignTempVal(00, "temp");
+    menuController.clearSelectedMenu();
+    materialController.resetMaterials();
     if (widget.product.isMenu) {
       debugPrint("menu var");
       getMenuList(widget.product.frmProductId);
@@ -206,14 +209,7 @@ class _FoodDetailState extends State<FoodDetail> {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           padding: const EdgeInsets.all(2.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              for (var x in materialController.filterMaterial)
-                                buildChipListTile(x),
-                            ],
-                          ),
+                          child: buildChipListTile(),
                         ),
                       ],
                     );
@@ -310,58 +306,45 @@ class _FoodDetailState extends State<FoodDetail> {
             ),
           Expanded(
             flex: 2,
-            child: Center(
-                child: Container(
-              width: Get.width * 0.8,
-              child: RaisedButton(
-                onPressed: () {
-                  basketController.addProductinMyBasket(
-                      materialController.selectedMaterial.toList(),
-                      materialController.filterMaterial.toList(),
-                      menuController.selectedMenu.toList());
+            child: FoundationButton("Add to cart", () {
+              basketController.addProductinMyBasket(
+                  materialController.selectedMaterial.toList(),
+                  materialController.filterMaterial.toList(),
+                  menuController.selectedMenu.toList());
 
-                  showToastMessage(
-                      "Ürün sepete başarıyla eklendi", Colors.green);
-                  navController.navigationTransition(4);
-                  Navigator.of(context).pop();
-                },
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Add to cart',
-                      style: TextStyle(
-                          fontFamily: 'Varela',
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                  ],
-                ),
-                color: Color(0xFFF17532),
-              ),
-            )),
+              showToastMessage("Ürün sepete başarıyla eklendi", Colors.green);
+              navController.navigationTransition(4);
+              Navigator.of(context).pop();
+            }),
           )
         ],
       ),
     );
   }
 
-  buildChipListTile(item) {
-    return Container(
-      margin: EdgeInsets.all(5.0),
-      child: Chip(
-        label: Text(item.productMaterials),
-        elevation: 6,
-        deleteIcon: Icon(Icons.cancel),
-        onDeleted: () {
-          debugPrint("delete chip materialid" + item.frmProductMaterialsId);
-          materialController.removeMaterial(item.frmProductMaterialsId);
-        },
-      ),
+  Widget buildChipListTile() {
+    debugPrint("Mehmet");
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // filterMaterial state saçma bir şekilde güncellenmediği için böyle bir gereksiz if koydum
+        if (materialController.removeMetarialState.value ||
+            !materialController.removeMetarialState.value)
+          for (var x in materialController.filterMaterial)
+            Container(
+              margin: EdgeInsets.all(5.0),
+              child: Chip(
+                label: Text(x.productMaterials),
+                elevation: 6,
+                deleteIcon: Icon(Icons.cancel),
+                onDeleted: () {
+                  //debugPrint("delete chip materialid" + x.frmProductMaterialsId);
+                  materialController.removeMaterial(x.frmProductMaterialsId);
+                },
+              ),
+            ),
+      ],
     );
   }
 
@@ -382,11 +365,12 @@ class _FoodDetailState extends State<FoodDetail> {
             items: [
               for (var i in menuItem)
                 DropdownMenuItem(
-                    child: Text(productController.getProduct(i)[0].name +
+                    child: Text(productController.getProduct(i).name +
                         " - " +
-                        productController.getProduct(i)[0].price +
+                        productController.getProduct(i).price +
                         "₺"),
-                    value: productController.getProduct(i)[0].frmProductId)
+                    value:
+                        "${productController.getProduct(i).frmProductId},${productController.getProduct(i).name}")
             ],
             hint: Text("Select Menu Items"),
             onChanged: (value) {
