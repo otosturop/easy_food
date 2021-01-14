@@ -1,6 +1,5 @@
 import 'package:easy_food/data/products/material_api.dart';
 import 'package:easy_food/model/MaterialModel.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/state_manager.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
@@ -8,16 +7,12 @@ class MaterialController extends GetxController {
   var isLoading = true.obs;
   var materialList = List<Data>.empty().obs;
   var filterMaterial = List<Data>.empty().obs;
+
   var extraMaterial = List<Data>.empty().obs;
   var multiSelectExtraMaterials = List<MultiSelectItem<ExMaterial>>.empty().obs;
   var selectedMaterial = List<ExMaterial>.empty().obs;
   var removeMetarialState = false.obs;
   MaterialApi _api = MaterialApi();
-
-  @override
-  void onInit() async {
-    super.onInit();
-  }
 
   Future fetchMaterial(String userId) async {
     try {
@@ -33,7 +28,7 @@ class MaterialController extends GetxController {
 
   getListForMaterial(List materialListId) {
     if (materialList.length > 0) {
-      filterMaterial = RxList<Data>(null);
+      filterMaterial.clear();
       List<Data> temp = [];
       for (var i in materialListId) {
         temp.add(materialList.firstWhere((e) => e.frmProductMaterialsId == i,
@@ -73,12 +68,14 @@ class MaterialController extends GetxController {
             .map((e) => MultiSelectItem<ExMaterial>(e, e.name))
             .toList();
         multiSelectExtraMaterials(temp);
+        update();
       }
     }
   }
 
   selectExtraMaterial(extraMaterial) {
     selectedMaterial(extraMaterial);
+    update();
   }
 
   removeMaterial(String materialId) {

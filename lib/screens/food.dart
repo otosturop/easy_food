@@ -1,3 +1,4 @@
+import 'package:easy_food/controllers/product/basket_controller.dart';
 import 'package:easy_food/controllers/product/category_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_food/ui/food_item.dart';
@@ -15,6 +16,7 @@ class _FoodState extends State<Food> with SingleTickerProviderStateMixin {
   TabController _tabController;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final CategoryController categoryController = Get.put(CategoryController());
+  final BasketController basketController = Get.put(BasketController());
 
   Future getCategoryLength() async {
     await categoryController.fetchCategory(widget.customerId);
@@ -24,6 +26,7 @@ class _FoodState extends State<Food> with SingleTickerProviderStateMixin {
 
   @override
   initState() {
+    basketController.assignCustomerId(widget.customerId);
     getCategoryLength().then((value) {
       _tabController = TabController(length: value, vsync: this);
     });

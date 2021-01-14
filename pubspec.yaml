@@ -29,6 +29,7 @@ dependencies:
   get: ^3.22.2
   multi_select_flutter: ^3.1.6
   fluttertoast: ^7.1.6
+  intl: ^0.16.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -48,7 +48,8 @@ class _FoodDetailState extends State<FoodDetail> {
     super.initState();
     debugPrint("ürün id " + widget.product.frmProductId);
     //basket initial
-    basketController.getProductAmount(widget.product.frmProductId, "1");
+    basketController.getProductAmount(widget.product.frmProductId,
+        widget.product.name, "1", double.parse(widget.product.price));
     menuController.assignTempVal(00, "temp");
     menuController.clearSelectedMenu();
     materialController.resetMaterials();
@@ -59,11 +60,11 @@ class _FoodDetailState extends State<FoodDetail> {
     if (widget.product.productMaterials != "") {
       debugPrint("material var");
       alreadyMaterial = true;
-      getMaterial("1");
+      getMaterial(basketController.customerId.value);
     }
     if (widget.product.materialsRemoved != "") {
       if (alreadyMaterial) {
-        getMaterial("1");
+        getMaterial(basketController.customerId.value);
       }
       debugPrint("kaldırılabilir material var");
     }
@@ -159,7 +160,10 @@ class _FoodDetailState extends State<FoodDetail> {
                             ],
                             onChanged: (value) {
                               basketController.getProductAmount(
-                                  widget.product.frmProductId, value);
+                                  widget.product.frmProductId,
+                                  widget.product.name,
+                                  value,
+                                  double.parse(widget.product.price));
                             },
                           ),
                         )),
@@ -323,7 +327,6 @@ class _FoodDetailState extends State<FoodDetail> {
   }
 
   Widget buildChipListTile() {
-    debugPrint("Mehmet");
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

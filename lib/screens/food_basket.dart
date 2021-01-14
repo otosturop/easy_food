@@ -55,10 +55,9 @@ class _FoodBasketState extends State<FoodBasket> {
                                 Icons.food_bank_rounded,
                                 size: 36.0,
                               ),
-                              title: Text(productController
-                                  .getProduct(i.productId)
-                                  .name),
+                              title: Text(i.productName),
                               subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   if (i.extraMaterial.length > 0)
                                     Text(i.extraMaterial
@@ -162,7 +161,9 @@ class _FoodBasketState extends State<FoodBasket> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: FoundationButton("Confirm cart", () {}),
+                      child: FoundationButton("Confirm cart", () {
+                        basketController.sendCartToServer(countTotalPrice());
+                      }),
                     )
                   ],
                 ),
