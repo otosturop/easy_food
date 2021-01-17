@@ -26,7 +26,6 @@ class _FoodItemState extends State<FoodItem> {
   Widget build(BuildContext context) {
     //debugPrint(widget.categoryId.toString());
     return Scaffold(
-      backgroundColor: Color(0xFFFCFAF8),
       body: GridView.extent(
         maxCrossAxisExtent: 200,
         primary: false,
@@ -66,8 +65,10 @@ class _FoodItemState extends State<FoodItem> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     (1 != 0)
-                        ? Icon(Icons.favorite, color: Color(0xFFEF7532))
-                        : Icon(Icons.favorite_border, color: Color(0xFFEF7532))
+                        ? Icon(Icons.favorite,
+                            color: Theme.of(context).colorScheme.primary)
+                        : Icon(Icons.favorite_border,
+                            color: Theme.of(context).colorScheme.primary)
                   ],
                 ),
               ),
@@ -90,7 +91,7 @@ class _FoodItemState extends State<FoodItem> {
               Text(
                 "${product.price}₺",
                 style: TextStyle(
-                    color: Color(0xFFCC8053),
+                    color: Theme.of(context).colorScheme.secondary,
                     fontFamily: 'Varela',
                     fontSize: 14.0),
               ),
@@ -98,7 +99,7 @@ class _FoodItemState extends State<FoodItem> {
               Text(
                 product.name,
                 style: TextStyle(
-                    color: Color(0xFF575E67),
+                    color: Theme.of(context).colorScheme.secondary,
                     fontFamily: 'Varela',
                     fontSize: 14.0),
               ),
@@ -117,11 +118,12 @@ class _FoodItemState extends State<FoodItem> {
                     Text('Add to cart',
                         style: TextStyle(
                             fontFamily: 'Varela',
-                            color: Color(0xFFD17E50),
+                            color:
+                                Theme.of(context).colorScheme.secondaryVariant,
                             fontSize: 14.0)),
                     Icon(
                       Icons.add_circle_outline,
-                      color: Color(0xFFD17E50),
+                      color: Theme.of(context).colorScheme.secondaryVariant,
                       size: 14.0,
                     )
                   ],

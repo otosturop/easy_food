@@ -26,11 +26,11 @@ class FoundationButton extends StatelessWidget {
                   fontFamily: 'Varela',
                   fontSize: 14.0,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white),
+                  color: Theme.of(context).colorScheme.surface),
             ),
           ],
         ),
-        color: Color(0xFFF17532),
+        color: Theme.of(context).colorScheme.primary,
       ),
     ));
   }

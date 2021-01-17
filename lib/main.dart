@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:easy_food/screens/customer.dart';
+import 'package:easy_food/ui/theme/app_theme_light.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_food/controllers/bottom_bar_controller.dart';
 import 'package:easy_food/screens/food_basket.dart';
@@ -15,9 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Easy Food',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: AppThemeLight.instance.theme,
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
@@ -53,19 +52,22 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade400,
+        backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 2.0,
         centerTitle: true,
         title: Obx(() {
           return Text(
             navController.pageTitle[navController.selectedIndex],
             style: TextStyle(
-                fontFamily: 'Varela', fontSize: 20.0, color: Color(0xFF545D68)),
+                fontFamily: 'Varela',
+                fontSize: 20.0,
+                color: Theme.of(context).colorScheme.primaryVariant),
           );
         }),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.logout, color: Color(0xFF545D68)),
+            icon: Icon(Icons.logout,
+                color: Theme.of(context).colorScheme.primaryVariant),
             onPressed: () {},
           ),
         ],
@@ -90,9 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
               Icon(Icons.shopping_basket,
                   size: 25, color: navController.currentIconColor[4]),
             ],
-            color: Colors.grey.shade400,
-            backgroundColor: Colors.white,
-            buttonBackgroundColor: Colors.grey.shade400,
+            color: Theme.of(context).colorScheme.background,
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            buttonBackgroundColor: Theme.of(context).colorScheme.background,
             animationCurve: Curves.bounceInOut,
             animationDuration: Duration(milliseconds: 300),
             onTap: (index) {

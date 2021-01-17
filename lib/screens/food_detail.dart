@@ -74,11 +74,12 @@ class _FoodDetailState extends State<FoodDetail> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey.shade400,
+        backgroundColor: Theme.of(context).colorScheme.background,
         elevation: 2.0,
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Color(0xFF545D68)),
+          icon: Icon(Icons.arrow_back,
+              color: Theme.of(context).colorScheme.primaryVariant),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -87,10 +88,11 @@ class _FoodDetailState extends State<FoodDetail> {
             style: TextStyle(
                 fontFamily: 'Varela',
                 fontSize: 20.0,
-                color: Color(0xFF545D68))),
+                color: Theme.of(context).colorScheme.primaryVariant)),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.shopping_cart, color: Color(0xFF545D68)),
+            icon: Icon(Icons.shopping_cart,
+                color: Theme.of(context).colorScheme.primaryVariant),
             onPressed: () {
               navController.navigationTransition(4);
               Navigator.of(context).pop();
@@ -113,7 +115,7 @@ class _FoodDetailState extends State<FoodDetail> {
                       fontFamily: 'Varela',
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFF17532)),
+                      color: Theme.of(context).colorScheme.primary),
                 ),
               ),
             ),
@@ -144,7 +146,9 @@ class _FoodDetailState extends State<FoodDetail> {
                             EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                         decoration: BoxDecoration(
                             border: Border.all(
-                                color: Colors.grey.shade600, width: 2),
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
+                                width: 2),
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
                         child: DropdownButtonHideUnderline(
@@ -172,7 +176,7 @@ class _FoodDetailState extends State<FoodDetail> {
                             fontFamily: 'Varela',
                             fontSize: 22.0,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFFF17532))),
+                            color: Theme.of(context).colorScheme.primary)),
                   ]);
             }),
           ),
@@ -182,7 +186,7 @@ class _FoodDetailState extends State<FoodDetail> {
             child: Center(
               child: Text(widget.product.description,
                   style: TextStyle(
-                      color: Color(0xFF575E67),
+                      color: Theme.of(context).colorScheme.secondary,
                       fontFamily: 'Varela',
                       fontSize: 12.0)),
             ),
@@ -251,14 +255,22 @@ class _FoodDetailState extends State<FoodDetail> {
                           style: TextStyle(
                               fontSize: 12.0, fontWeight: FontWeight.bold),
                         ),
-                        headerColor: Color(0xFFF17532).withOpacity(0.5),
+                        headerColor: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.5),
                         decoration: BoxDecoration(
                           border: Border.all(
-                              color: Colors.orangeAccent[400], width: 1.8),
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              width: 1.8),
                         ),
-                        selectedChipColor: Color(0xFFF17532).withOpacity(0.5),
-                        selectedTextStyle:
-                            TextStyle(color: Color(0xFFF17532), fontSize: 12.0),
+                        selectedChipColor: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.5),
+                        selectedTextStyle: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 12.0),
                         onTap: (values) {
                           materialController.selectExtraMaterial(values);
                         },
@@ -316,7 +328,8 @@ class _FoodDetailState extends State<FoodDetail> {
                   materialController.filterMaterial.toList(),
                   menuController.selectedMenu.toList());
 
-              showToastMessage("Ürün sepete başarıyla eklendi", Colors.green);
+              showToastMessage("Ürün sepete başarıyla eklendi",
+                  Theme.of(context).colorScheme.onSecondary);
               navController.navigationTransition(4);
               Navigator.of(context).pop();
             }),
@@ -359,7 +372,8 @@ class _FoodDetailState extends State<FoodDetail> {
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       margin: EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey.shade600, width: 2),
+          border: Border.all(
+              color: Theme.of(context).colorScheme.onBackground, width: 2),
           borderRadius: BorderRadius.all(Radius.circular(10))),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
@@ -391,7 +405,7 @@ class _FoodDetailState extends State<FoodDetail> {
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 2,
         backgroundColor: toastColor,
-        textColor: Colors.white,
+        textColor: Theme.of(context).colorScheme.surface,
         fontSize: 16.0);
   }
 }

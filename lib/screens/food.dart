@@ -38,11 +38,12 @@ class _FoodState extends State<Food> with SingleTickerProviderStateMixin {
     return Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          backgroundColor: Colors.grey.shade400,
+          backgroundColor: Theme.of(context).colorScheme.background,
           elevation: 2.0,
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Color(0xFF545D68)),
+            icon: Icon(Icons.arrow_back,
+                color: Theme.of(context).colorScheme.primaryVariant),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -51,10 +52,11 @@ class _FoodState extends State<Food> with SingleTickerProviderStateMixin {
               style: TextStyle(
                   fontFamily: 'Varela',
                   fontSize: 20.0,
-                  color: Color(0xFF545D68))),
+                  color: Theme.of(context).colorScheme.primaryVariant)),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.shopping_cart, color: Color(0xFF545D68)),
+              icon: Icon(Icons.shopping_cart,
+                  color: Theme.of(context).colorScheme.primaryVariant),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -83,10 +85,11 @@ class _FoodState extends State<Food> with SingleTickerProviderStateMixin {
                   return TabBar(
                     controller: _tabController,
                     indicatorColor: Colors.transparent,
-                    labelColor: Color(0xFFC88D67),
+                    labelColor: Theme.of(context).colorScheme.secondaryVariant,
                     isScrollable: true,
                     labelPadding: EdgeInsets.only(right: 45.0),
-                    unselectedLabelColor: Color(0xFFCDCDCD),
+                    unselectedLabelColor:
+                        Theme.of(context).colorScheme.onSurface,
                     tabs: [
                       for (var i in categoryController.categoryList)
                         Tab(
