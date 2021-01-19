@@ -12,6 +12,7 @@ class BasketController extends GetxController {
   var loop = false.obs;
   OrdersApi _api = OrdersApi();
 
+  // Eğer customer değiştirise bsepeti boşalt
   void assignCustomerId(String id) {
     if (customerId.isEmpty) {
       customerId.value = id;
@@ -30,6 +31,7 @@ class BasketController extends GetxController {
     productPrice.value = price;
   }
 
+  // Sepete ürün ekleme
   void addProductinMyBasket(
       List exmaterials, List removeMaterial, List menuItems) {
     myBasket.add(MyBasket(
@@ -40,6 +42,7 @@ class BasketController extends GetxController {
         exmaterials,
         removeMaterial,
         menuItems));
+    update();
   }
 
   void updateBasketItem(id, progress) {
@@ -73,7 +76,6 @@ class BasketController extends GetxController {
             element.amount.toString(),
             element.selectedMenu.map((x) => x.menuName).toString(),
             customerId.value);
-        print("productId" + productId.value);
       });
     } finally {}
   }

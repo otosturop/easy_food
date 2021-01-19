@@ -48,13 +48,8 @@ class ProductController extends GetxController {
   }
 
   getProduct(String productId) {
-    print("product ekleme:" + productId);
-    if (allProducts.isEmpty) {
-      print("product yok");
-    } else {
-      print(allProducts.length.toString());
-      var product = allProducts.firstWhere((i) => i.frmProductId == productId);
-      return product;
-    }
+    print(allProducts.length.toString());
+    var product = allProducts.firstWhere((i) => i.frmProductId == productId);
+    return product;
   }
 }

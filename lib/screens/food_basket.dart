@@ -1,5 +1,6 @@
 import 'package:easy_food/controllers/product/basket_controller.dart';
 import 'package:easy_food/controllers/product/product_controller.dart';
+import 'package:easy_food/screens/last_order.dart';
 import 'package:easy_food/ui/foundation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -23,9 +24,12 @@ class _FoodBasketState extends State<FoodBasket> {
   String countTotalPrice() {
     double total = 0;
     basketController.myBasket.forEach((e) {
-      total += e.amount *
-          double.parse(productController.getProduct(e.productId).price);
+      total += e.amount * e.price;
+      if (e.extraMaterial.length > 0) {
+        e.extraMaterial.forEach((x) => total += x.price * e.amount);
+      }
     });
+
     return total.toStringAsFixed(2);
   }
 
@@ -74,12 +78,7 @@ class _FoodBasketState extends State<FoodBasket> {
                                 ],
                               )),
                           Center(
-                            child: Text((double.parse(productController
-                                            .getProduct(i.productId)
-                                            .price) *
-                                        i.amount)
-                                    .toString() +
-                                "₺"),
+                            child: Text((i.price * i.amount).toString() + "₺"),
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 20.0, right: 20.0),
@@ -156,13 +155,18 @@ class _FoodBasketState extends State<FoodBasket> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text("Toplam Fİyat"),
-                        Text(countTotalPrice()),
+                        Text(countTotalPrice() + "₺"),
                       ],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: FoundationButton("Confirm cart", () {
-                        basketController.sendCartToServer(countTotalPrice());
+                        basketController
+                            .sendCartToServer(countTotalPrice())
+                            .then((value) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => LastOrder()));
+                        });
                       }),
                     )
                   ],

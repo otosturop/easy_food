@@ -250,6 +250,7 @@ class _FoodDetailState extends State<FoodDetail> {
                           left: 8.0, top: 0, bottom: 0, right: 8.0),
                       child: MultiSelectChipField(
                         items: materialController.multiSelectExtraMaterials,
+                        icon: Icon(Icons.check),
                         title: Text(
                           "Extra Material",
                           style: TextStyle(
@@ -272,6 +273,10 @@ class _FoodDetailState extends State<FoodDetail> {
                             color: Theme.of(context).colorScheme.primary,
                             fontSize: 12.0),
                         onTap: (values) {
+                          /*values
+                              .map((e) => print("detail " + e.name))
+                              .toString();
+                          print("--bitti--"); */
                           materialController.selectExtraMaterial(values);
                         },
                       ),
@@ -287,7 +292,6 @@ class _FoodDetailState extends State<FoodDetail> {
                 if (menuController.isLoading.value) {
                   return Center(child: CircularProgressIndicator());
                 } else {
-                  //buraya bakarlar
                   return Column(children: [
                     Text(
                       'Menu Seçimleri',

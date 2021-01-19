@@ -73,9 +73,14 @@ class MaterialController extends GetxController {
     }
   }
 
+  // ekstara materyal ekleme
   selectExtraMaterial(extraMaterial) {
-    selectedMaterial(extraMaterial);
-    update();
+    selectedMaterial.clear();
+    var ids = extraMaterial.map((e) => e.id).toSet().toList();
+    ids.forEach((item) {
+      var tempEx = extraMaterial.firstWhere((ex) => ex.id == item);
+      selectedMaterial.add(tempEx);
+    });
   }
 
   removeMaterial(String materialId) {
