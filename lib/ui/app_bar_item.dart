@@ -25,8 +25,7 @@ class AppBarItem extends StatelessWidget {
               color: Theme.of(context).colorScheme.primaryVariant)),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.shopping_cart,
-              color: Theme.of(context).colorScheme.primaryVariant),
+          icon: actionIcon,
           onPressed: () {},
         ),
       ],

@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:easy_food/screens/customer.dart';
+import 'package:easy_food/screens/sign_in.dart';
 import 'package:easy_food/ui/theme/app_theme_light.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_food/controllers/bottom_bar_controller.dart';
@@ -7,14 +8,16 @@ import 'package:easy_food/screens/food_basket.dart';
 import 'package:easy_food/screens/home.dart';
 import 'package:easy_food/screens/profile.dart';
 import 'package:easy_food/screens/search.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Easy Food',
       theme: AppThemeLight.instance.theme,
       debugShowCheckedModeBanner: false,
@@ -48,6 +51,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return buildHomePage(currentIndex: navController.selectedIndex);
   }
 
+  logoutApp() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.remove("token");
+    Get.to(SignIn());
+  }
+
   Scaffold buildHomePage({int currentIndex}) {
     return Scaffold(
       key: _scaffoldKey,
@@ -68,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
           IconButton(
             icon: Icon(Icons.logout,
                 color: Theme.of(context).colorScheme.primaryVariant),
-            onPressed: () {},
+            onPressed: () => logoutApp(),
           ),
         ],
       ),
@@ -83,12 +92,15 @@ class _MyHomePageState extends State<MyHomePage> {
             items: <Widget>[
               Icon(Icons.home,
                   size: 25, color: navController.currentIconColor[0]),
-              Icon(Icons.person_outline,
+              Icon(Icons.account_circle,
                   size: 25, color: navController.currentIconColor[1]),
               Icon(Icons.fastfood,
                   size: 25, color: navController.currentIconColor[2]),
-              Icon(Icons.search,
-                  size: 25, color: navController.currentIconColor[3]),
+              FaIcon(
+                FontAwesomeIcons.utensils,
+                size: 25.0,
+                color: navController.currentIconColor[3],
+              ),
               Icon(Icons.shopping_basket,
                   size: 25, color: navController.currentIconColor[4]),
             ],

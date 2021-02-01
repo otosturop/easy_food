@@ -10,21 +10,25 @@ class SocialLoginButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const SocialLoginButton(
-      { this.buttonText,
-       this.buttonColor,
+      {this.buttonText,
+      this.buttonColor,
       this.textColor: Colors.white,
       this.buttonRadius: 16.0,
       this.buttonHeight: 40,
-       this.buttonIcon,
-       this.onPressed})
+      this.buttonIcon,
+      this.onPressed})
       : super();
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
+    return ElevatedButton(
       onPressed: onPressed,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(buttonRadius))),
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(buttonRadius))),
+        primary: buttonColor,
+        onPrimary: Theme.of(context).colorScheme.surface,
+      ),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -39,7 +43,6 @@ class SocialLoginButton extends StatelessWidget {
               : Container(),
         ],
       ),
-      color: buttonColor,
     );
   }
 }

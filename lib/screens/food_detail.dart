@@ -326,16 +326,15 @@ class _FoodDetailState extends State<FoodDetail> {
             ),
           Expanded(
             flex: 2,
-            child: FoundationButton("Add to cart", () {
+            child: FoundationButton("Sepete Ekle", () {
               basketController.addProductinMyBasket(
                   materialController.selectedMaterial.toList(),
-                  materialController.filterMaterial.toList(),
+                  materialController.removedMaterials.toList(),
                   menuController.selectedMenu.toList());
 
               showToastMessage("Ürün sepete başarıyla eklendi",
                   Theme.of(context).colorScheme.onSecondary);
-              navController.navigationTransition(4);
-              Navigator.of(context).pop();
+              Get.back();
             }),
           )
         ],

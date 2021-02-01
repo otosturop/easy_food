@@ -12,7 +12,7 @@ class BasketController extends GetxController {
   var loop = false.obs;
   OrdersApi _api = OrdersApi();
 
-  // Eğer customer değiştirise bsepeti boşalt
+  // Eğer customer değiştirise sepeti boşalt
   void assignCustomerId(String id) {
     if (customerId.isEmpty) {
       customerId.value = id;

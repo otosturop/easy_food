@@ -12,11 +12,11 @@ class BottomBarController extends GetxController {
   ].obs;
 
   var pageTitle = [
-    "Home",
-    "Profile",
-    "Restaurants",
-    "Search",
-    "Food Basket",
+    "Adreslerim",
+    "Profilim",
+    "Restoranlar",
+    "Siparişleirm",
+    "Sepetim",
   ].obs;
 
   int get selectedIndex => this._pageIndex.value;

@@ -1,9 +1,11 @@
 import 'package:easy_food/controllers/product/basket_controller.dart';
 import 'package:easy_food/controllers/product/product_controller.dart';
-import 'package:easy_food/screens/last_order.dart';
+import 'package:easy_food/screens/success_order.dart';
+import 'package:easy_food/screens/sign_in.dart';
 import 'package:easy_food/ui/foundation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FoodBasket extends StatefulWidget {
   @override
@@ -16,8 +18,16 @@ class _FoodBasketState extends State<FoodBasket> {
   final BasketController basketController = Get.put(BasketController());
   final ProductController productController = Get.put(ProductController());
 
+  void controlLogin() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('token')) {
+      Get.to(SignIn());
+    }
+  }
+
   @override
   void initState() {
+    controlLogin();
     super.initState();
   }
 
@@ -64,17 +74,19 @@ class _FoodBasketState extends State<FoodBasket> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   if (i.extraMaterial.length > 0)
-                                    Text(i.extraMaterial
-                                        .map((e) => e.name)
-                                        .toString()),
+                                    Text("Ekstra:" +
+                                        i.extraMaterial
+                                            .map((e) => e.name)
+                                            .toString()),
                                   if (i.selectedMenu.length > 0)
                                     Text(i.selectedMenu
                                         .map((e) => e.menuName)
                                         .toString()),
                                   if (i.removedMaterial.length > 0)
-                                    Text(i.removedMaterial
-                                        .map((e) => e.productMaterials)
-                                        .toString())
+                                    Text("Çıkarılacak: " +
+                                        i.removedMaterial
+                                            .map((e) => e.productMaterials)
+                                            .toString())
                                 ],
                               )),
                           Center(

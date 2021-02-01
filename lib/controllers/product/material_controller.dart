@@ -7,6 +7,7 @@ class MaterialController extends GetxController {
   var isLoading = true.obs;
   var materialList = List<Data>.empty().obs;
   var filterMaterial = List<Data>.empty().obs;
+  var removedMaterials = List<Data>.empty().obs;
 
   var extraMaterial = List<Data>.empty().obs;
   var multiSelectExtraMaterials = List<MultiSelectItem<ExMaterial>>.empty().obs;
@@ -42,15 +43,15 @@ class MaterialController extends GetxController {
 
   getListExtraMaterial(List extraMaterialId) {
     if (materialList.length > 0) {
-      extraMaterial = RxList<Data>();
-      List<Data> tempExtraMAterial = [];
+      extraMaterial.clear();
+      List<Data> tempExtraMaterial = [];
       for (var i in extraMaterialId) {
-        tempExtraMAterial.add(materialList.firstWhere(
+        tempExtraMaterial.add(materialList.firstWhere(
             (e) => e.frmProductMaterialsId == i,
             orElse: () => null));
       }
-      if (tempExtraMAterial[0] != null) {
-        extraMaterial(tempExtraMAterial);
+      if (tempExtraMaterial[0] != null) {
+        extraMaterial(tempExtraMaterial);
 
         List<ExMaterial> exMaterials = [];
 
@@ -79,6 +80,9 @@ class MaterialController extends GetxController {
     var ids = extraMaterial.map((e) => e.id).toSet().toList();
     ids.forEach((item) {
       var tempEx = extraMaterial.firstWhere((ex) => ex.id == item);
+      print("name extramaterial: " + tempEx.name);
+      var tempName = tempEx.name.split("-");
+      tempEx.name = tempName[0].toString();
       selectedMaterial.add(tempEx);
     });
   }
@@ -88,6 +92,7 @@ class MaterialController extends GetxController {
     var item =
         filterMaterial.firstWhere((x) => x.frmProductMaterialsId == materialId);
     filterMaterial.remove(item);
+    removedMaterials.add(item);
   }
 
   void resetMaterials() {
@@ -98,7 +103,7 @@ class MaterialController extends GetxController {
 
 class ExMaterial {
   final int id;
-  final String name;
+  String name;
   final double price;
   ExMaterial(this.id, this.name, this.price);
 }

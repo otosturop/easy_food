@@ -45,8 +45,7 @@ class _FoodItemState extends State<FoodItem> {
       padding: EdgeInsets.only(top: 5.0, bottom: 5.0, left: 5.0, right: 5.0),
       child: InkWell(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => FoodDetail(product: product)));
+          Get.to(FoodDetail(product: product));
         },
         child: Container(
             decoration: BoxDecoration(

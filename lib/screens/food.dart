@@ -1,5 +1,7 @@
+import 'package:easy_food/controllers/bottom_bar_controller.dart';
 import 'package:easy_food/controllers/product/basket_controller.dart';
 import 'package:easy_food/controllers/product/category_controller.dart';
+import 'package:easy_food/main.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_food/ui/food_item.dart';
 import 'package:get/get.dart';
@@ -17,6 +19,7 @@ class _FoodState extends State<Food> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final CategoryController categoryController = Get.put(CategoryController());
   final BasketController basketController = Get.put(BasketController());
+  final BottomBarController navController = Get.put(BottomBarController());
 
   Future getCategoryLength() async {
     await categoryController.fetchCategory(widget.customerId);
@@ -48,7 +51,7 @@ class _FoodState extends State<Food> with SingleTickerProviderStateMixin {
               Navigator.of(context).pop();
             },
           ),
-          title: Text('Products',
+          title: Text('Ürünler',
               style: TextStyle(
                   fontFamily: 'Varela',
                   fontSize: 20.0,
@@ -58,7 +61,8 @@ class _FoodState extends State<Food> with SingleTickerProviderStateMixin {
               icon: Icon(Icons.shopping_cart,
                   color: Theme.of(context).colorScheme.primaryVariant),
               onPressed: () {
-                Navigator.of(context).pop();
+                navController.navigationTransition(4);
+                Get.to(MyHomePage());
               },
             ),
           ],
@@ -71,7 +75,7 @@ class _FoodState extends State<Food> with SingleTickerProviderStateMixin {
               child: SizedBox(
                 height: Get.height * 0.05,
                 child: Text(
-                  'Categories',
+                  'Kategoriler',
                   style: context.theme.textTheme.headline5,
                 ),
               ),

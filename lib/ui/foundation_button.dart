@@ -12,10 +12,8 @@ class FoundationButton extends StatelessWidget {
     return Center(
         child: Container(
       width: Get.width * 0.8,
-      child: RaisedButton(
+      child: ElevatedButton(
         onPressed: onPressed,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20.0))),
         child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -30,7 +28,12 @@ class FoundationButton extends StatelessWidget {
             ),
           ],
         ),
-        color: Theme.of(context).colorScheme.primary,
+        style: ElevatedButton.styleFrom(
+          primary: Theme.of(context).colorScheme.primary,
+          onPrimary: Theme.of(context).colorScheme.surface,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20.0))),
+        ),
       ),
     ));
   }

@@ -48,10 +48,9 @@ class _CustomerState extends State<Customer> {
                         subtitle: Text(i.metaData),
                         trailing: IconButton(
                           icon: Icon(Icons.arrow_forward_ios),
-                          color: Color(0xFFF17532),
+                          color: Theme.of(context).colorScheme.primary,
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Food(i.frmCustomerId)));
+                            Get.to(Food(i.frmCustomerId));
                           },
                         ),
                       ),

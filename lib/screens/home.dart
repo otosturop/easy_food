@@ -13,7 +13,7 @@ class Home extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 20),
             child: Text(
-              'Home',
+              'Adreslerim',
               style: TextStyle(
                   fontFamily: 'Varela',
                   fontSize: 42.0,
