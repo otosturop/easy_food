@@ -92,7 +92,23 @@ class _SignInState extends State<SignIn> {
                         key: loginKey,
                         child: Column(
                           children: [
-                            Spacer(),
+                            Obx(() {
+                              if (authController.failLogin.value) {
+                                return Center(
+                                  child: Text(
+                                    "Hatalı kullanıcı adı veya parola!!",
+                                    style: TextStyle(
+                                        fontFamily: 'Varela',
+                                        fontSize: 16.0,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .error),
+                                  ),
+                                );
+                              } else {
+                                return Spacer();
+                              }
+                            }),
                             buildNameField(context),
                             buildPasswordField(context),
                             Spacer(),

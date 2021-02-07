@@ -58,7 +58,7 @@ class _CustomerState extends State<Customer> {
                         padding: const EdgeInsets.all(8.0),
                         child: Center(
                           child: Text(
-                            "Working hours",
+                            "Çalışma Saatleri",
                             style: context.theme.textTheme.headline6,
                           ),
                         ),

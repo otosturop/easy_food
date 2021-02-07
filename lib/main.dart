@@ -5,7 +5,7 @@ import 'package:easy_food/ui/theme/app_theme_light.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_food/controllers/bottom_bar_controller.dart';
 import 'package:easy_food/screens/food_basket.dart';
-import 'package:easy_food/screens/home.dart';
+import 'package:easy_food/screens/address.dart';
 import 'package:easy_food/screens/profile.dart';
 import 'package:easy_food/screens/search.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final BottomBarController navController = Get.put(BottomBarController());
 
   final screens = <Widget>[
-    Home(),
+    Address(),
     Profile(),
     Customer(),
     Search(),
