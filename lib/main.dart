@@ -54,6 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
   logoutApp() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove("token");
+    prefs.remove("userId");
+    prefs.remove("userName");
     Get.to(SignIn());
   }
 

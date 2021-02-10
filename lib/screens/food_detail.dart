@@ -46,7 +46,6 @@ class _FoodDetailState extends State<FoodDetail> {
   @override
   void initState() {
     super.initState();
-    debugPrint("ürün id " + widget.product.frmProductId);
     //basket initial
     basketController.getProductAmount(widget.product.frmProductId,
         widget.product.name, "1", double.parse(widget.product.price));
@@ -54,11 +53,9 @@ class _FoodDetailState extends State<FoodDetail> {
     menuController.clearSelectedMenu();
     materialController.resetMaterials();
     if (widget.product.isMenu) {
-      debugPrint("menu var");
       getMenuList(widget.product.frmProductId);
     }
     if (widget.product.productMaterials != "") {
-      debugPrint("material var");
       alreadyMaterial = true;
       getMaterial(basketController.customerId.value);
     }
@@ -66,7 +63,22 @@ class _FoodDetailState extends State<FoodDetail> {
       if (alreadyMaterial) {
         getMaterial(basketController.customerId.value);
       }
-      debugPrint("kaldırılabilir material var");
+    }
+  }
+
+  void addToBasket() {
+    if (menuController.menuList.length == menuController.selectedMenu.length) {
+      basketController.addProductinMyBasket(
+          materialController.selectedMaterial.toList(),
+          materialController.removedMaterials.toList(),
+          menuController.selectedMenu.toList());
+
+      showToastMessage("Ürün sepete başarıyla eklendi",
+          Theme.of(context).colorScheme.onSecondary);
+      Get.back();
+    } else {
+      showToastMessage("Lütfen Menü Ürünlerini Eksiksiz Seçiniz",
+          Theme.of(context).colorScheme.error);
     }
   }
 
@@ -326,16 +338,7 @@ class _FoodDetailState extends State<FoodDetail> {
             ),
           Expanded(
             flex: 2,
-            child: FoundationButton("Sepete Ekle", () {
-              basketController.addProductinMyBasket(
-                  materialController.selectedMaterial.toList(),
-                  materialController.removedMaterials.toList(),
-                  menuController.selectedMenu.toList());
-
-              showToastMessage("Ürün sepete başarıyla eklendi",
-                  Theme.of(context).colorScheme.onSecondary);
-              Get.back();
-            }),
+            child: FoundationButton("Sepete Ekle", () => addToBasket()),
           )
         ],
       ),
@@ -392,7 +395,7 @@ class _FoodDetailState extends State<FoodDetail> {
                     value:
                         "${productController.getProduct(i).frmProductId},${productController.getProduct(i).name}")
             ],
-            hint: Text("Select Menu Items"),
+            hint: Text("Menü İçin Seçim Yapınız"),
             onChanged: (value) {
               //menu listesi ve değerleri
               menuController.assignTempVal(index, value);

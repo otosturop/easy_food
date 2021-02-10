@@ -1,6 +1,8 @@
 import 'dart:convert';
 
-import 'package:easy_food/model/CustomerModel.dart';
+import 'package:easy_food/model/customer/CustomerInfoModel.dart';
+import 'package:easy_food/model/customer/CustomerModel.dart';
+import 'package:easy_food/model/customer/PaymentMethodModel.dart';
 import 'package:http/http.dart' as http;
 
 class CustomerApi {
@@ -15,7 +17,30 @@ class CustomerApi {
       final resJson = jsonDecode(responseCustomers.body);
       return CustomerModel.fromJson(resJson);
     } else {
-      throw Exception("Veri Getirilemedi");
+      throw Exception("customer Veri Getirilemedi");
+    }
+  }
+
+  Future<CustomerInfoModel> customerInfo(customerId) async {
+    final apiUrl =
+        baseUrl + "Customer/getCustomerInfo?xcustomer_id=" + customerId;
+    var responseCustomer = await client.get(apiUrl);
+    if (responseCustomer != null && responseCustomer.statusCode == 200) {
+      final resJson = jsonDecode(responseCustomer.body);
+      return CustomerInfoModel.fromJson(resJson);
+    } else {
+      throw Exception("Customet InfoVeri Getirilemedi");
+    }
+  }
+
+  Future<PaymentMethodModel> getPaymentMethod() async {
+    final apiUrl = baseUrl + "Customer/getPaymentMethod";
+    var responsePayment = await client.get(apiUrl);
+    if (responsePayment != null && responsePayment.statusCode == 200) {
+      final resJson = jsonDecode(responsePayment.body);
+      return PaymentMethodModel.fromJson(resJson);
+    } else {
+      throw Exception("Payment Veri Getirilemedi");
     }
   }
 }

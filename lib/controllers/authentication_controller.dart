@@ -2,7 +2,6 @@ import 'package:easy_food/controllers/bottom_bar_controller.dart';
 import 'package:easy_food/data/auth/register_api.dart';
 import 'package:easy_food/main.dart';
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationController extends GetxController {
@@ -19,7 +18,6 @@ class AuthenticationController extends GetxController {
   void registerUser(fullname, email, phone, password) async {
     try {
       var userId = await _api.register(fullname, email, phone, password);
-      debugPrint("User numarası: " + userId.outs.userId.toString());
       _api.assignRole(userId.outs.userId);
     } finally {}
   }

@@ -1,4 +1,5 @@
 import 'package:easy_food/controllers/bottom_bar_controller.dart';
+import 'package:easy_food/controllers/customer/customer_controller.dart';
 import 'package:easy_food/controllers/product/basket_controller.dart';
 import 'package:easy_food/controllers/product/category_controller.dart';
 import 'package:easy_food/main.dart';
@@ -20,6 +21,7 @@ class _FoodState extends State<Food> with SingleTickerProviderStateMixin {
   final CategoryController categoryController = Get.put(CategoryController());
   final BasketController basketController = Get.put(BasketController());
   final BottomBarController navController = Get.put(BottomBarController());
+  final CustomerController customerController = Get.put(CustomerController());
 
   Future getCategoryLength() async {
     await categoryController.fetchCategory(widget.customerId);
@@ -34,6 +36,7 @@ class _FoodState extends State<Food> with SingleTickerProviderStateMixin {
       _tabController = TabController(length: value, vsync: this);
     });
     super.initState();
+    customerController.getCustomerInfo(widget.customerId);
   }
 
   @override

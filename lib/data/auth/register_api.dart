@@ -46,7 +46,6 @@ class RegisterApi {
   }
 
   Future<LoginModel> doLogin(userName, password) async {
-    print(userName + " " + password);
     final apiUrl = baseUrl + "Users/login";
     final postBody = {
       'userName': userName,

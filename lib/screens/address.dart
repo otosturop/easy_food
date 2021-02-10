@@ -1,6 +1,7 @@
 import 'package:easy_food/controllers/user/address_controller.dart';
 import 'package:easy_food/ui/foundation_button.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 class Address extends StatelessWidget {
@@ -65,7 +66,7 @@ class Address extends StatelessWidget {
                     SizedBox(height: 15.0),
                     myAdress(context),
                     SizedBox(height: 15.0),
-                    FoundationButton("Adres Ekle", () {})
+                    FoundationButton("Adres Ekle", () => addAddress())
                   ],
                 );
               } else {
@@ -76,9 +77,20 @@ class Address extends StatelessWidget {
                       child: Column(
                         children: [
                           ListTile(
-                            leading: Icon(
-                              Icons.home,
-                              size: 36.0,
+                            trailing: IconButton(
+                              icon: Icon(
+                                Icons.delete_forever,
+                                size: 28.0,
+                              ),
+                              onPressed: () => addressController
+                                  .removeAddress(i.frmUserAdressId),
+                            ),
+                            leading: IconButton(
+                              icon: Icon(
+                                Icons.edit,
+                                size: 28.0,
+                              ),
+                              onPressed: () => print(i.frmUserAdressId),
                             ),
                             title: Center(
                               child: Text(
@@ -106,7 +118,7 @@ class Address extends StatelessWidget {
   Container myAdress(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 10),
-      child: TextField(
+      child: TextFormField(
         decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.edit,
@@ -123,6 +135,7 @@ class Address extends StatelessWidget {
         maxLines: 6,
         minLines: 4,
         keyboardType: TextInputType.multiline,
+        onChanged: (data) => addressController.assignTextAddress(data),
       ),
     );
   }
@@ -253,5 +266,28 @@ class Address extends StatelessWidget {
             }),
       ),
     );
+  }
+
+  void showToastMessage(String message, Color toastColor) {
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 2,
+        backgroundColor: toastColor,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+
+  addAddress() {
+    //print("ilk: " + addressController.textAddress);
+    if (addressController.textAddress == null ||
+        addressController.textAddress == "" ||
+        addressController.tempAreaVal.value == null ||
+        addressController.tempTypeVal.value == null) {
+      showToastMessage("Lütfen eksiksiz adres giriniz", Colors.red);
+    } else {
+      addressController.addAddress();
+    }
   }
 }

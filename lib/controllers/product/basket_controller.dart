@@ -1,6 +1,7 @@
 import 'package:easy_food/data/products/orders_api.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/state_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class BasketController extends GetxController {
   var customerId = "".obs;
@@ -11,6 +12,10 @@ class BasketController extends GetxController {
   var myBasket = List<MyBasket>.empty().obs;
   var loop = false.obs;
   OrdersApi _api = OrdersApi();
+  String orderNote;
+  var complateOrder = false.obs;
+  var addressId = RxString(null);
+  var paymentMethodId = RxString(null);
 
   // Eğer customer değiştirise sepeti boşalt
   void assignCustomerId(String id) {
@@ -23,6 +28,21 @@ class BasketController extends GetxController {
       }
     }
   }
+
+  Future<String> getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userId = prefs.getString('userId');
+    return userId;
+  }
+
+  void selectedAddress(adressId) => addressId.value = adressId;
+
+  void setOrderNote(note) => orderNote = note;
+
+  void setPaymentMethod(id) => paymentMethodId.value = id;
+
+  void setComplateOrder() => complateOrder.value = !complateOrder.value;
+  void falseComplateOrder() => complateOrder.value = false;
 
   getProductAmount(id, name, amount, price) {
     productAmount.value = amount;
@@ -62,9 +82,11 @@ class BasketController extends GetxController {
   }
 
   Future<void> sendCartToServer(String totalPrice) async {
+    String userId = await getUserId();
+    print("adress: " + addressId.value);
     try {
-      var orderId = await _api.getOrderId("99999", "3", "1", totalPrice,
-          customerId.value, "Merhaba bu mobil nottur");
+      var orderId = await _api.getOrderId(userId, addressId.value,
+          paymentMethodId.value, totalPrice, customerId.value, orderNote);
       debugPrint("Sipariş numarası: " + orderId.outs.frmOrdersId.toString());
       myBasket.forEach((element) {
         _api.sendOrder(

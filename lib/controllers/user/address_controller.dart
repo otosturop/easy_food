@@ -19,6 +19,7 @@ class AddressController extends GetxController {
   var tempAreaVal = RxString(null);
   var tempAddressVal = RxString(null);
   var tempNeighborhoodVal = RxString(null);
+  String textAddress;
   var loadingCounty = false.obs;
   var loadingAllAddress = false.obs;
   var loadingArea = false.obs;
@@ -64,25 +65,17 @@ class AddressController extends GetxController {
     return userId;
   }
 
-  void selectedCounty(county) {
-    tempCountyVal.value = county;
-  }
+  void selectedCounty(county) => tempCountyVal.value = county;
 
-  void selectedType(type) {
-    tempTypeVal.value = type;
-  }
+  void selectedType(type) => tempTypeVal.value = type;
 
-  void selectedArea(area) {
-    tempAreaVal.value = area;
-  }
+  void selectedArea(area) => tempAreaVal.value = area;
 
-  void selectedAddress(adressId) {
-    tempAddressVal.value = adressId;
-  }
+  void selectedAddress(adressId) => tempAddressVal.value = adressId;
 
-  void selectedNeighborhood(id) {
-    tempNeighborhoodVal.value = id;
-  }
+  void selectedNeighborhood(id) => tempNeighborhoodVal.value = id;
+
+  void assignTextAddress(address) => textAddress = address;
 
   Future<void> getCounties(cityId) async {
     try {
@@ -130,5 +123,34 @@ class AddressController extends GetxController {
     } finally {
       loadingNeighborhood(true);
     }
+  }
+
+  Future<void> addAddress() async {
+    String userId = await getUserId();
+    try {
+      var status = await _addressApi.addAddress(
+          userId,
+          tempTypeVal.value,
+          textAddress,
+          "7",
+          tempCountyVal.value,
+          tempCountyVal.value,
+          tempNeighborhoodVal.value);
+      if (status.success) {
+        insertAddressStatus.value = false;
+        getAllAddress(userId);
+      }
+    } finally {}
+  }
+
+  Future<void> removeAddress(addressId) async {
+    String userId = await getUserId();
+    try {
+      var status = await _addressApi.removeAddress(addressId);
+      if (status.success) {
+        insertAddressStatus.value = false;
+        getAllAddress(userId);
+      }
+    } finally {}
   }
 }

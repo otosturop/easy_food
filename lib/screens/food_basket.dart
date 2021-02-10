@@ -37,6 +37,7 @@ class _FoodBasketState extends State<FoodBasket> {
   }
 
   String countTotalPrice() {
+    basketController.falseComplateOrder();
     double total = 0;
     basketController.myBasket.forEach((e) {
       total += e.amount * e.price;
@@ -171,24 +172,14 @@ class _FoodBasketState extends State<FoodBasket> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Text("Toplam Fİyat"),
+                        Text("Toplam Fiyat"),
                         Text(countTotalPrice() + "₺"),
                       ],
                     ),
-                    if (addressController.loadingAllAddress.value)
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: dropdownSelectAdress(context),
-                      ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: FoundationButton("Sepeti Onayla", () {
-                        basketController
-                            .sendCartToServer(countTotalPrice())
-                            .then((value) {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => LastOrder()));
-                        });
+                        Get.to(SuccessOrder(totalPrice: countTotalPrice()));
                       }),
                     )
                   ],
@@ -205,32 +196,6 @@ class _FoodBasketState extends State<FoodBasket> {
           );
         }
       }),
-    );
-  }
-
-  Widget dropdownSelectAdress(context) {
-    return Container(
-      height: Get.height * 0.05,
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      margin: EdgeInsets.only(top: 10),
-      decoration: BoxDecoration(
-          border: Border.all(
-              color: Theme.of(context).colorScheme.onBackground, width: 2),
-          borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-            isExpanded: true,
-            value: addressController.tempAddressVal.value,
-            items: [
-              for (var i in addressController.allAddress)
-                DropdownMenuItem<String>(
-                    child: Text(i.addressTypeQw), value: i.addressType),
-            ],
-            hint: Text("Address Seçiniz"),
-            onChanged: (value) {
-              print("adres: " + value.toString());
-            }),
-      ),
     );
   }
 }
