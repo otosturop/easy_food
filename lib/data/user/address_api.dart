@@ -69,6 +69,29 @@ class AddressApi {
     }
   }
 
+  Future<AddAddressModel> updateAddress(addressId, userId, addressType,
+      textAddress, cityId, countiesId, areaId, neighborhoodId) async {
+    final apiUrl = baseUrl + "Users/updateUserAddress";
+    final postBody = jsonEncode({
+      'tfrm_user_adress_id': addressId,
+      'user_id': userId,
+      "address_type": addressType,
+      "complate_address": textAddress,
+      "city_id": cityId,
+      "counties_id": countiesId,
+      "area_id": areaId,
+      "neighborhoods_id": neighborhoodId,
+    });
+    var responseStatus =
+        await client.post(apiUrl, headers: headers, body: postBody);
+    if (responseStatus != null && responseStatus.statusCode == 200) {
+      Map result = json.decode(responseStatus.body);
+      return AddAddressModel.fromJson(result);
+    } else {
+      throw Exception("Something went wrong");
+    }
+  }
+
   Future<RemoveAddressModel> removeAddress(userAddressId) async {
     final apiUrl = baseUrl + "Users/deleteUserAddress";
     final postBody = {

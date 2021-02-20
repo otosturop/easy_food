@@ -1,8 +1,7 @@
-import 'package:easy_food/controllers/bottom_bar_controller.dart';
 import 'package:easy_food/controllers/customer/customer_controller.dart';
 import 'package:easy_food/controllers/product/basket_controller.dart';
 import 'package:easy_food/controllers/product/category_controller.dart';
-import 'package:easy_food/main.dart';
+import 'package:easy_food/ui/appBarBasket.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_food/ui/food_item.dart';
 import 'package:get/get.dart';
@@ -20,7 +19,6 @@ class _FoodState extends State<Food> with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final CategoryController categoryController = Get.put(CategoryController());
   final BasketController basketController = Get.put(BasketController());
-  final BottomBarController navController = Get.put(BottomBarController());
   final CustomerController customerController = Get.put(CustomerController());
 
   Future getCategoryLength() async {
@@ -59,16 +57,7 @@ class _FoodState extends State<Food> with SingleTickerProviderStateMixin {
                   fontFamily: 'Varela',
                   fontSize: 20.0,
                   color: Theme.of(context).colorScheme.primaryVariant)),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.shopping_cart,
-                  color: Theme.of(context).colorScheme.primaryVariant),
-              onPressed: () {
-                navController.navigationTransition(4);
-                Get.to(MyHomePage());
-              },
-            ),
-          ],
+          actions: <Widget>[AppBarBasket()],
         ),
         body: ListView(
           padding: EdgeInsets.only(left: 20),

@@ -33,7 +33,7 @@ class Address extends StatelessWidget {
                           icon: addressController.iconStatus(),
                           color: Colors.white,
                           onPressed: () {
-                            addressController.addAdressStatusChange();
+                            addressController.addAdressStatusChange("-1");
                           });
                     })),
               ],
@@ -66,47 +66,61 @@ class Address extends StatelessWidget {
                     SizedBox(height: 15.0),
                     myAdress(context),
                     SizedBox(height: 15.0),
-                    FoundationButton("Adres Ekle", () => addAddress())
+                    Obx(() {
+                      if (addressController.editAddress.value) {
+                        return FoundationButton(
+                            "Adres Düzenle", () => editAddress());
+                      } else {
+                        return FoundationButton(
+                            "Adres Ekle", () => addAddress());
+                      }
+                    })
                   ],
                 );
               } else {
-                return Column(children: [
-                  for (var i in addressController.allAddress)
-                    Card(
-                      elevation: 8,
-                      child: Column(
-                        children: [
-                          ListTile(
-                            trailing: IconButton(
-                              icon: Icon(
-                                Icons.delete_forever,
-                                size: 28.0,
+                if (addressController.loadingAllAddress.value) {
+                  return Column(children: [
+                    for (var i in addressController.allAddress)
+                      Card(
+                        elevation: 8,
+                        child: Column(
+                          children: [
+                            ListTile(
+                              trailing: IconButton(
+                                icon: Icon(
+                                  Icons.delete_forever,
+                                  size: 28.0,
+                                ),
+                                onPressed: () => addressController
+                                    .removeAddress(i.frmUserAdressId),
                               ),
-                              onPressed: () => addressController
-                                  .removeAddress(i.frmUserAdressId),
-                            ),
-                            leading: IconButton(
-                              icon: Icon(
-                                Icons.edit,
-                                size: 28.0,
+                              leading: IconButton(
+                                icon: Icon(
+                                  Icons.edit,
+                                  size: 28.0,
+                                ),
+                                onPressed: () => addressController
+                                    .addAdressStatusChange(i.frmUserAdressId,
+                                        type: i.addressType),
                               ),
-                              onPressed: () => print(i.frmUserAdressId),
-                            ),
-                            title: Center(
-                              child: Text(
-                                i.addressTypeQw,
-                                style: context.theme.textTheme.headline5,
+                              title: Center(
+                                child: Text(
+                                  i.addressTypeQw,
+                                  style: context.theme.textTheme.headline5,
+                                ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(i.complateAddress),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(i.complateAddress),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                ]);
+                  ]);
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
               }
             }),
           )
@@ -279,8 +293,7 @@ class Address extends StatelessWidget {
         fontSize: 16.0);
   }
 
-  addAddress() {
-    //print("ilk: " + addressController.textAddress);
+  void addAddress() {
     if (addressController.textAddress == null ||
         addressController.textAddress == "" ||
         addressController.tempAreaVal.value == null ||
@@ -288,6 +301,17 @@ class Address extends StatelessWidget {
       showToastMessage("Lütfen eksiksiz adres giriniz", Colors.red);
     } else {
       addressController.addAddress();
+    }
+  }
+
+  void editAddress() {
+    if (addressController.textAddress == null ||
+        addressController.textAddress == "" ||
+        addressController.tempAreaVal.value == null ||
+        addressController.tempTypeVal.value == null) {
+      showToastMessage("Lütfen eksiksiz adres giriniz", Colors.red);
+    } else {
+      addressController.updateAddress();
     }
   }
 }

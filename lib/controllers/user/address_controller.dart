@@ -25,6 +25,8 @@ class AddressController extends GetxController {
   var loadingArea = false.obs;
   var loadingNeighborhood = false.obs;
   var insertAddressStatus = false.obs;
+  var editAddress = false.obs;
+  var editId = "".obs;
   List<Map<String, String>> adressType = [
     {
       "id": "1",
@@ -50,9 +52,18 @@ class AddressController extends GetxController {
     super.onInit();
   }
 
-  void addAdressStatusChange() {
-    insertAddressStatus.value = !insertAddressStatus.value;
-    iconStatus();
+  void addAdressStatusChange(String id, {type}) {
+    if (id == "-1") {
+      insertAddressStatus.value = !insertAddressStatus.value;
+      iconStatus();
+      editAddress.value = false;
+    } else {
+      insertAddressStatus.value = !insertAddressStatus.value;
+      iconStatus();
+      selectedType(type);
+      editAddress.value = true;
+      editId.value = id;
+    }
   }
 
   Icon iconStatus() {
@@ -138,6 +149,26 @@ class AddressController extends GetxController {
           tempNeighborhoodVal.value);
       if (status.success) {
         insertAddressStatus.value = false;
+        getAllAddress(userId);
+      }
+    } finally {}
+  }
+
+  Future<void> updateAddress() async {
+    String userId = await getUserId();
+    try {
+      var status = await _addressApi.updateAddress(
+          editId.value,
+          userId,
+          tempTypeVal.value,
+          textAddress,
+          "7",
+          tempCountyVal.value,
+          tempCountyVal.value,
+          tempNeighborhoodVal.value);
+      if (status.success) {
+        insertAddressStatus.value = false;
+        editAddress.value = false;
         getAllAddress(userId);
       }
     } finally {}

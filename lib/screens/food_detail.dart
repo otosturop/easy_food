@@ -1,5 +1,5 @@
-import 'package:easy_food/controllers/bottom_bar_controller.dart';
 import 'package:easy_food/controllers/product/basket_controller.dart';
+import 'package:easy_food/ui/appBarBasket.dart';
 import 'package:easy_food/ui/foundation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_food/controllers/product/menu_controller.dart';
@@ -19,7 +19,6 @@ class FoodDetail extends StatefulWidget {
 }
 
 class _FoodDetailState extends State<FoodDetail> {
-  final BottomBarController navController = Get.put(BottomBarController());
   final ProductController productController = Get.put(ProductController());
   final MaterialController materialController = Get.put(MaterialController());
   final MenuController menuController = Get.put(MenuController());
@@ -101,16 +100,7 @@ class _FoodDetailState extends State<FoodDetail> {
                 fontFamily: 'Varela',
                 fontSize: 20.0,
                 color: Theme.of(context).colorScheme.primaryVariant)),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.shopping_cart,
-                color: Theme.of(context).colorScheme.primaryVariant),
-            onPressed: () {
-              navController.navigationTransition(4);
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
+        actions: <Widget>[AppBarBasket()],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

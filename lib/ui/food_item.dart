@@ -100,10 +100,10 @@ class _FoodItemState extends State<FoodItem> {
                 style: TextStyle(
                     color: Theme.of(context).colorScheme.secondary,
                     fontFamily: 'Varela',
-                    fontSize: 14.0),
+                    fontSize: 12.0),
               ),
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(4.0),
                 child: Container(
                   color: Color(0xFFEBEBEB),
                   height: 1.0,
@@ -114,7 +114,7 @@ class _FoodItemState extends State<FoodItem> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text('Add to cart',
+                    Text('Sepete Ekle',
                         style: TextStyle(
                             fontFamily: 'Varela',
                             color:

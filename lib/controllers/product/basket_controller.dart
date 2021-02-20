@@ -42,6 +42,7 @@ class BasketController extends GetxController {
   void setPaymentMethod(id) => paymentMethodId.value = id;
 
   void setComplateOrder() => complateOrder.value = !complateOrder.value;
+
   void falseComplateOrder() => complateOrder.value = false;
 
   getProductAmount(id, name, amount, price) {
@@ -99,7 +100,9 @@ class BasketController extends GetxController {
             element.selectedMenu.map((x) => x.menuName).toString(),
             customerId.value);
       });
-    } finally {}
+    } finally {
+      myBasket.clear();
+    }
   }
 }
 
