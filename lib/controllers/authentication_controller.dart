@@ -1,4 +1,7 @@
 import 'package:easy_food/controllers/bottom_bar_controller.dart';
+import 'package:easy_food/controllers/user/address_controller.dart';
+import 'package:easy_food/controllers/user/orders_history_controller.dart';
+import 'package:easy_food/controllers/user/user_controller.dart';
 import 'package:easy_food/data/auth/register_api.dart';
 import 'package:easy_food/main.dart';
 import 'package:get/get.dart';
@@ -10,6 +13,9 @@ class AuthenticationController extends GetxController {
   RxBool failLogin = false.obs;
   bool get textPasswordType => this._textPasswordType.value;
   final BottomBarController navController = Get.put(BottomBarController());
+  final AddressController addressController = Get.put(AddressController());
+  final UserController userController = Get.put(UserController());
+  final OrdersHistoryController order = Get.put(OrdersHistoryController());
 
   void changeTypePassword() {
     _textPasswordType.value = !_textPasswordType.value;
@@ -31,6 +37,9 @@ class AuthenticationController extends GetxController {
         prefs.setString('token', status.token.toString());
         prefs.setString('userId', status.session.userId.toString());
         prefs.setString('userName', status.session.userName.toString());
+        addressController.onInit();
+        userController.onInit();
+        order.onInit();
         navController.navigationTransition(0);
         Get.offAll(MyHomePage());
       } else {

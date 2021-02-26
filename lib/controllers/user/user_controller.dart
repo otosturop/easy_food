@@ -8,18 +8,25 @@ class UserController extends GetxController {
   var email = RxString(null);
   var phone = RxString(null);
   var loadingInfo = false.obs;
+  var isLogin = true.obs;
   Infoapi _infoApi = Infoapi();
 
-  Future<String> getUserId() async {
+  Future getUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userId = prefs.getString('userId');
-    return userId;
+    if (!prefs.containsKey('token')) {
+      isLogin.value = false;
+    } else {
+      isLogin.value = true;
+      update();
+      String userId = prefs.getString('userId');
+      return userId;
+    }
   }
 
   @override
   void onInit() async {
     String userId = await getUserId();
-    getUserInfo(userId);
+    if (userId.isNotEmpty) getUserInfo(userId);
     super.onInit();
   }
 

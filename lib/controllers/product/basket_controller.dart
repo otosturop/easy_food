@@ -1,6 +1,6 @@
+import 'package:easy_food/controllers/user/orders_history_controller.dart';
 import 'package:easy_food/data/products/orders_api.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BasketController extends GetxController {
@@ -16,6 +16,8 @@ class BasketController extends GetxController {
   var complateOrder = false.obs;
   var addressId = RxString(null);
   var paymentMethodId = RxString(null);
+  var orderNumber = "".obs;
+  final OrdersHistoryController order = Get.put(OrdersHistoryController());
 
   // Eğer customer değiştirise sepeti boşalt
   void assignCustomerId(String id) {
@@ -88,7 +90,7 @@ class BasketController extends GetxController {
     try {
       var orderId = await _api.getOrderId(userId, addressId.value,
           paymentMethodId.value, totalPrice, customerId.value, orderNote);
-      debugPrint("Sipariş numarası: " + orderId.outs.frmOrdersId.toString());
+      orderNumber.value = orderId.outs.frmOrdersId.toString();
       myBasket.forEach((element) {
         _api.sendOrder(
             orderId.outs.frmOrdersId.toString(),
@@ -102,6 +104,7 @@ class BasketController extends GetxController {
       });
     } finally {
       myBasket.clear();
+      order.getOrdersHistory(userId);
     }
   }
 }

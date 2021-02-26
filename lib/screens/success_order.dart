@@ -24,9 +24,9 @@ class SuccessOrder extends StatelessWidget {
     } else if (basketController.addressId.value == null) {
       showToastMessage("Lütfen Adres Seçiniz", Colors.red);
     } else {
-      basketController
-          .sendCartToServer(totalPrice)
-          .then((value) => basketController.setComplateOrder());
+      basketController.sendCartToServer(totalPrice).then((value) {
+        basketController.setComplateOrder();
+      });
     }
   }
 
@@ -65,7 +65,7 @@ class SuccessOrder extends StatelessWidget {
                 padding: EdgeInsets.all(16.0),
                 child: orderNote(context),
               ),
-              FoundationButton("Siparişi Tamala", () => completeOrder())
+              FoundationButton("Siparişi Tamamla", () => completeOrder())
             ],
           );
         } else {
@@ -89,6 +89,14 @@ class SuccessOrder extends StatelessWidget {
                       FontAwesomeIcons.checkCircle,
                       size: 96.0,
                       color: Theme.of(context).colorScheme.onSecondary,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        "Sipariş Numarası: " +
+                            basketController.orderNumber.value,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
                     ),
                   ],
                 ),

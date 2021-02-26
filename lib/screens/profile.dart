@@ -1,4 +1,5 @@
 import 'package:easy_food/controllers/user/user_controller.dart';
+import 'package:easy_food/screens/sign_in.dart';
 import 'package:easy_food/ui/foundation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,84 +17,104 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      body: Column(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Center(
-              child: Container(
-                width: 96,
-                height: 96,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 4,
-                      color: Theme.of(context).scaffoldBackgroundColor,
+        key: _scaffoldKey,
+        body: Obx(() {
+          if (userController.isLogin.value) {
+            return Column(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Center(
+                    child: Container(
+                      width: 96,
+                      height: 96,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 4,
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                spreadRadius: 2,
+                                blurRadius: 10,
+                                color: Colors.black.withOpacity(0.1),
+                                offset: Offset(0, 10))
+                          ],
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/user.png'),
+                          )),
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                          spreadRadius: 2,
-                          blurRadius: 10,
-                          color: Colors.black.withOpacity(0.1),
-                          offset: Offset(0, 10))
-                    ],
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage('assets/user.png'),
-                    )),
+                  ),
+                ),
+                Expanded(
+                  flex: 7,
+                  child: Obx(() {
+                    if (userController.loadingInfo.value) {
+                      return Column(
+                        children: [
+                          buildInputField(
+                              context,
+                              "Ad Soyad",
+                              Icons.person,
+                              TextInputType.text,
+                              userController.fullName.value, (value) {
+                            userController.setFullName(value);
+                          }),
+                          buildInputField(
+                              context,
+                              "Kullanıcı Adınız",
+                              Icons.person_pin_circle,
+                              TextInputType.text,
+                              userController.userName.value, (value) {
+                            userController.setUserName(value);
+                          }),
+                          buildInputField(
+                              context,
+                              "E-posta adresiniz",
+                              Icons.email,
+                              TextInputType.emailAddress,
+                              userController.email.value, (value) {
+                            userController.setEmail(value);
+                          }),
+                          buildInputField(
+                              context,
+                              "Telefon Numaranız",
+                              Icons.phone,
+                              TextInputType.phone,
+                              userController.phone.value, (value) {
+                            userController.setPhone(value);
+                          }),
+                          FoundationButton("Kaydet", () => _validation()),
+                        ],
+                      );
+                    } else {
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  }),
+                )
+              ],
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Text(
+                    "Lütfen Giriş Yapınız",
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  TextButton(
+                      child: Text('Giriş Yapmak için Tıklayınız.'),
+                      onPressed: () {
+                        Get.to(SignIn());
+                      })
+                ],
               ),
-            ),
-          ),
-          Expanded(
-            flex: 7,
-            child: Obx(() {
-              if (userController.loadingInfo.value) {
-                return Column(
-                  children: [
-                    buildInputField(
-                        context,
-                        "Ad Soyad",
-                        Icons.person,
-                        TextInputType.text,
-                        userController.fullName.value, (value) {
-                      userController.setFullName(value);
-                    }),
-                    buildInputField(
-                        context,
-                        "Kullanıcı Adınız",
-                        Icons.person_pin_circle,
-                        TextInputType.text,
-                        userController.userName.value, (value) {
-                      userController.setUserName(value);
-                    }),
-                    buildInputField(
-                        context,
-                        "E-posta adresiniz",
-                        Icons.email,
-                        TextInputType.emailAddress,
-                        userController.email.value, (value) {
-                      userController.setEmail(value);
-                    }),
-                    buildInputField(
-                        context,
-                        "Telefon Numaranız",
-                        Icons.phone,
-                        TextInputType.phone,
-                        userController.phone.value, (value) {
-                      userController.setPhone(value);
-                    }),
-                    FoundationButton("Kaydet", () => _validation()),
-                  ],
-                );
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            }),
-          )
-        ],
-      ),
-    );
+            );
+          }
+        }));
   }
 
   Widget buildInputField(BuildContext context, String inputText, icon, type,

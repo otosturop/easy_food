@@ -48,7 +48,6 @@ class ProductController extends GetxController {
   }
 
   getProduct(String productId) {
-    print(allProducts.length.toString());
     var product = allProducts.firstWhere((i) => i.frmProductId == productId);
     return product;
   }

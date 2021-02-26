@@ -12,6 +12,8 @@ class CustomerController extends GetxController {
   var customer = List<Info>.empty().obs;
   var paymentMethod = List<Payment>.empty().obs;
   CustomerApi _api = CustomerApi();
+  final String imgPath =
+      "http://206.189.55.20:8080/preview/276ce05d-837b-4aa1-8f6f-ff02597a0e01/sf/x_file?_fai=";
 
   @override
   void onInit() async {
@@ -62,5 +64,11 @@ class CustomerController extends GetxController {
   String matchPaymentMethod(id) {
     var method = paymentMethod.firstWhere((e) => e.frmPaymentMethodId == id);
     return method.name;
+  }
+
+  getCustomer(String customertId) {
+    var product =
+        allCustomers.firstWhere((i) => i.frmCustomerId == customertId);
+    return product;
   }
 }

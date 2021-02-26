@@ -27,6 +27,7 @@ class AddressController extends GetxController {
   var insertAddressStatus = false.obs;
   var editAddress = false.obs;
   var editId = "".obs;
+  var isLogin = true.obs;
   List<Map<String, String>> adressType = [
     {
       "id": "1",
@@ -47,8 +48,10 @@ class AddressController extends GetxController {
   @override
   void onInit() async {
     String userId = await getUserId();
-    getAllAddress(userId);
-    getCounties("7");
+    if (userId.isNotEmpty) {
+      getAllAddress(userId);
+      getCounties("7");
+    }
     super.onInit();
   }
 
@@ -70,10 +73,16 @@ class AddressController extends GetxController {
     return insertAddressStatus.value ? Icon(Icons.close) : Icon(Icons.add);
   }
 
-  Future<String> getUserId() async {
+  Future getUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userId = prefs.getString('userId');
-    return userId;
+    if (!prefs.containsKey('token')) {
+      isLogin.value = false;
+    } else {
+      isLogin.value = true;
+      update();
+      String userId = prefs.getString('userId');
+      return userId;
+    }
   }
 
   void selectedCounty(county) => tempCountyVal.value = county;

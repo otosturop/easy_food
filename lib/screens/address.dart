@@ -1,4 +1,5 @@
 import 'package:easy_food/controllers/user/address_controller.dart';
+import 'package:easy_food/screens/sign_in.dart';
 import 'package:easy_food/ui/foundation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -11,122 +12,144 @@ class Address extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      body: ListView(
-        children: [
-          SizedBox(height: 15.0),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        key: _scaffoldKey,
+        body: Obx(() {
+          if (addressController.isLogin.value) {
+            return ListView(
               children: [
-                Text(
-                  'Kayıtlı Adreslerim',
-                  style: Theme.of(context).textTheme.headline5,
-                ),
-                Ink(
-                    decoration: ShapeDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        shape: CircleBorder()),
-                    child: Obx(() {
-                      return IconButton(
-                          icon: addressController.iconStatus(),
-                          color: Colors.white,
-                          onPressed: () {
-                            addressController.addAdressStatusChange("-1");
-                          });
-                    })),
-              ],
-            ),
-          ),
-          SizedBox(height: 15.0),
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Obx(() {
-              if (addressController.insertAddressStatus.value) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    dropdownSelectItemsType(
-                        context, addressController.adressType),
-                    SizedBox(height: 30.0),
-                    dropdownSelectCity(context),
-                    SizedBox(height: 15.0),
-                    if (addressController.loadingCounties.value)
-                      dropdownSelectItems(
-                          context, addressController.selectedCounties),
-                    SizedBox(height: 15.0),
-                    if (addressController.loadingArea.value)
-                      dropdownSelectItemsArea(
-                          context, addressController.selectedAreas),
-                    SizedBox(height: 15.0),
-                    if (addressController.loadingNeighborhood.value)
-                      dropdownSelectNeighborhood(
-                          context, addressController.selectedNeighborhoods),
-                    SizedBox(height: 15.0),
-                    myAdress(context),
-                    SizedBox(height: 15.0),
-                    Obx(() {
-                      if (addressController.editAddress.value) {
-                        return FoundationButton(
-                            "Adres Düzenle", () => editAddress());
-                      } else {
-                        return FoundationButton(
-                            "Adres Ekle", () => addAddress());
-                      }
-                    })
-                  ],
-                );
-              } else {
-                if (addressController.loadingAllAddress.value) {
-                  return Column(children: [
-                    for (var i in addressController.allAddress)
-                      Card(
-                        elevation: 8,
-                        child: Column(
-                          children: [
-                            ListTile(
-                              trailing: IconButton(
-                                icon: Icon(
-                                  Icons.delete_forever,
-                                  size: 28.0,
-                                ),
-                                onPressed: () => addressController
-                                    .removeAddress(i.frmUserAdressId),
-                              ),
-                              leading: IconButton(
-                                icon: Icon(
-                                  Icons.edit,
-                                  size: 28.0,
-                                ),
-                                onPressed: () => addressController
-                                    .addAdressStatusChange(i.frmUserAdressId,
-                                        type: i.addressType),
-                              ),
-                              title: Center(
-                                child: Text(
-                                  i.addressTypeQw,
-                                  style: context.theme.textTheme.headline5,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Text(i.complateAddress),
-                            ),
-                          ],
-                        ),
+                SizedBox(height: 15.0),
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        'Kayıtlı Adreslerim',
+                        style: Theme.of(context).textTheme.headline5,
                       ),
-                  ]);
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              }
-            }),
-          )
-        ],
-      ),
-    );
+                      Ink(
+                          decoration: ShapeDecoration(
+                              color: Theme.of(context).colorScheme.primary,
+                              shape: CircleBorder()),
+                          child: Obx(() {
+                            return IconButton(
+                                icon: addressController.iconStatus(),
+                                color: Colors.white,
+                                onPressed: () {
+                                  addressController.addAdressStatusChange("-1");
+                                });
+                          })),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 15.0),
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: Obx(() {
+                    if (addressController.insertAddressStatus.value) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          dropdownSelectItemsType(
+                              context, addressController.adressType),
+                          SizedBox(height: 30.0),
+                          dropdownSelectCity(context),
+                          SizedBox(height: 15.0),
+                          if (addressController.loadingCounties.value)
+                            dropdownSelectItems(
+                                context, addressController.selectedCounties),
+                          SizedBox(height: 15.0),
+                          if (addressController.loadingArea.value)
+                            dropdownSelectItemsArea(
+                                context, addressController.selectedAreas),
+                          SizedBox(height: 15.0),
+                          if (addressController.loadingNeighborhood.value)
+                            dropdownSelectNeighborhood(context,
+                                addressController.selectedNeighborhoods),
+                          SizedBox(height: 15.0),
+                          myAdress(context),
+                          SizedBox(height: 15.0),
+                          Obx(() {
+                            if (addressController.editAddress.value) {
+                              return FoundationButton(
+                                  "Adres Düzenle", () => editAddress());
+                            } else {
+                              return FoundationButton(
+                                  "Adres Ekle", () => addAddress());
+                            }
+                          })
+                        ],
+                      );
+                    } else {
+                      if (addressController.loadingAllAddress.value) {
+                        return Column(children: [
+                          for (var i in addressController.allAddress)
+                            Card(
+                              elevation: 8,
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    trailing: IconButton(
+                                      icon: Icon(
+                                        Icons.delete_forever,
+                                        size: 28.0,
+                                      ),
+                                      onPressed: () => addressController
+                                          .removeAddress(i.frmUserAdressId),
+                                    ),
+                                    leading: IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                        size: 28.0,
+                                      ),
+                                      onPressed: () => addressController
+                                          .addAdressStatusChange(
+                                              i.frmUserAdressId,
+                                              type: i.addressType),
+                                    ),
+                                    title: Center(
+                                      child: Text(
+                                        i.addressTypeQw,
+                                        style:
+                                            context.theme.textTheme.headline5,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(i.complateAddress),
+                                  ),
+                                ],
+                              ),
+                            ),
+                        ]);
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    }
+                  }),
+                )
+              ],
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  Text(
+                    "Lütfen Giriş Yapınız",
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  TextButton(
+                      child: Text('Giriş Yapmak için Tıklayınız.'),
+                      onPressed: () {
+                        Get.to(SignIn());
+                      })
+                ],
+              ),
+            );
+          }
+        }));
   }
 
   Container myAdress(BuildContext context) {

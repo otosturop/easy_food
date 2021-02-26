@@ -7,7 +7,7 @@ import 'package:easy_food/controllers/bottom_bar_controller.dart';
 import 'package:easy_food/screens/food_basket.dart';
 import 'package:easy_food/screens/address.dart';
 import 'package:easy_food/screens/profile.dart';
-import 'package:easy_food/screens/search.dart';
+import 'package:easy_food/screens/order_history.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Address(),
     Profile(),
     Customer(),
-    Search(),
+    OrderHistory(),
     FoodBasket(),
   ];
 

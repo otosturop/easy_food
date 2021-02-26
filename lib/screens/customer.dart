@@ -37,21 +37,28 @@ class _CustomerState extends State<Customer> {
                   child: Column(
                     children: [
                       ListTile(
-                        leading: Icon(
-                          Icons.shop_outlined,
-                          size: 46.0,
+                        leading: FadeInImage.assetNetwork(
+                          placeholder: "assets/loading.gif",
+                          image: customerController.imgPath + i.logoPath,
+                          width: Get.width * 0.2,
                         ),
                         title: Text(
                           i.name,
                           style: context.theme.textTheme.headline6,
                         ),
                         subtitle: Text(i.metaData),
-                        trailing: IconButton(
-                          icon: Icon(Icons.arrow_forward_ios),
-                          color: Theme.of(context).colorScheme.primary,
-                          onPressed: () {
-                            Get.to(Food(i.frmCustomerId));
-                          },
+                        trailing: Container(
+                          child: IconButton(
+                            icon: Icon(Icons.arrow_forward_ios),
+                            color: Theme.of(context).colorScheme.surface,
+                            onPressed: () {
+                              Get.to(Food(i.frmCustomerId));
+                            },
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                       ),
                       Padding(
