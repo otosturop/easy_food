@@ -26,7 +26,7 @@ class UserController extends GetxController {
   @override
   void onInit() async {
     String userId = await getUserId();
-    if (userId.isNotEmpty) getUserInfo(userId);
+    if (isLogin.value) getUserInfo(userId);
     super.onInit();
   }
 

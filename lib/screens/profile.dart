@@ -1,6 +1,6 @@
 import 'package:easy_food/controllers/user/user_controller.dart';
 import 'package:easy_food/screens/sign_in.dart';
-import 'package:easy_food/ui/foundation_button.dart';
+import 'package:easy_food/components/foundation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -22,32 +22,6 @@ class _ProfileState extends State<Profile> {
           if (userController.isLogin.value) {
             return Column(
               children: [
-                Expanded(
-                  flex: 2,
-                  child: Center(
-                    child: Container(
-                      width: 96,
-                      height: 96,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 4,
-                            color: Theme.of(context).scaffoldBackgroundColor,
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
-                          ],
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: AssetImage('assets/user.png'),
-                          )),
-                    ),
-                  ),
-                ),
                 Expanded(
                   flex: 7,
                   child: Obx(() {
@@ -127,7 +101,6 @@ class _ProfileState extends State<Profile> {
             text: inputValue,
             selection: TextSelection.collapsed(
                 offset: inputValue != null ? inputValue.length : 0))),
-        autofocus: true,
         decoration: InputDecoration(
             labelText: inputText,
             border: OutlineInputBorder(

@@ -1,7 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:easy_food/screens/customer.dart';
 import 'package:easy_food/screens/sign_in.dart';
-import 'package:easy_food/ui/theme/app_theme_light.dart';
+import 'package:easy_food/components/theme/app_theme_light.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_food/controllers/bottom_bar_controller.dart';
 import 'package:easy_food/screens/food_basket.dart';

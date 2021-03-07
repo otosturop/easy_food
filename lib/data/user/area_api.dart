@@ -9,7 +9,7 @@ class AreaApi {
   var client = http.Client();
 
   Future<AreaModel> getArea(countyId) async {
-    final apiUrl = baseUrl + "Address/getArea?xcountyid=" + countyId;
+    final apiUrl = Uri.parse(baseUrl + "Address/getArea?xcountyid=" + countyId);
     var responseArea = await client.get(apiUrl);
     if (responseArea != null && responseArea.statusCode == 200) {
       final resJson = jsonDecode(responseArea.body);

@@ -9,8 +9,9 @@ class CategoryApi {
   var client = http.Client();
 
   Future<CategoriesModel> getCategories(String customerId) async {
-    final apiUrl =
-        baseUrl + "Product/getProductCategoriesList?xcustomer_id=" + customerId;
+    final apiUrl = Uri.parse(baseUrl +
+        "Product/getProductCategoriesList?xcustomer_id=" +
+        customerId);
     var responseCategories = await client.get(apiUrl);
     if (responseCategories != null && responseCategories.statusCode == 200) {
       final resJson = jsonDecode(responseCategories.body);

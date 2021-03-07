@@ -9,11 +9,11 @@ class ProductApi {
   var client = http.Client();
 
   Future<ProductModel> getProducts(String customerId, String categoryId) async {
-    final apiUrl = baseUrl +
+    final apiUrl = Uri.parse(baseUrl +
         "Product/getProductsList?xcustomer_id=" +
         customerId +
         "xproduct_category_id=" +
-        categoryId;
+        categoryId);
     var responseProducts = await client.get(apiUrl);
     if (responseProducts != null && responseProducts.statusCode == 200) {
       final resJson = jsonDecode(responseProducts.body);
@@ -24,7 +24,7 @@ class ProductApi {
   }
 
   Future<ProductModel> getAllProducts() async {
-    final apiUrl = baseUrl + "Product/getProductsList?xcustomer_id=";
+    final apiUrl = Uri.parse(baseUrl + "Product/getProductsList?xcustomer_id=");
     var responseAllProducts = await client.get(apiUrl);
     if (responseAllProducts != null && responseAllProducts.statusCode == 200) {
       final resJson = jsonDecode(responseAllProducts.body);

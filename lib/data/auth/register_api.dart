@@ -11,7 +11,7 @@ class RegisterApi {
   var client = http.Client();
 
   Future<RegisterModel> register(fullname, email, phone, password) async {
-    final apiUrl = baseUrl + "Users/createUser";
+    final apiUrl = Uri.parse(baseUrl + "Users/createUser");
     final postBody = jsonEncode({
       'full_name': fullname,
       'pass_word': password,
@@ -30,7 +30,7 @@ class RegisterApi {
   }
 
   Future<AssignRoleModel> assignRole(userId) async {
-    final apiUrl = baseUrl + "Users/addUserRole";
+    final apiUrl = Uri.parse(baseUrl + "Users/addUserRole");
     final postBody = jsonEncode({
       'user_id': userId,
       "role_id": "1",
@@ -46,7 +46,7 @@ class RegisterApi {
   }
 
   Future<LoginModel> doLogin(userName, password) async {
-    final apiUrl = baseUrl + "Users/login";
+    final apiUrl = Uri.parse(baseUrl + "Users/login");
     final postBody = {
       'userName': userName,
       "passWord": password,

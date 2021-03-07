@@ -18,7 +18,7 @@ class OrdersApi {
     final String formattedTime = formatter.format(now);
     debugPrint(formattedTime);
 
-    final apiUrl = baseUrl + "Orders/addOrders";
+    final apiUrl = Uri.parse(baseUrl + "Orders/addOrders");
     final postBody = jsonEncode({
       'user_id': userId,
       'address_id': adressId,
@@ -43,7 +43,7 @@ class OrdersApi {
 
   Future<OrderModel> sendOrder(orderId, productId, materialRemoved, materialAdd,
       price, quantity, option, customerId) async {
-    final apiUrl = baseUrl + "Orders/addOrderDetail";
+    final apiUrl = Uri.parse(baseUrl + "Orders/addOrderDetail");
     final postBody = jsonEncode({
       'order_id': orderId,
       'product_id': productId,

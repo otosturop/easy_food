@@ -9,7 +9,7 @@ class OrdersHistory {
   var client = http.Client();
 
   Future<OrdersHistoryModel> getOrdersHistory(userId) async {
-    final apiUrl = baseUrl + "Orders/getOrder?xuser_id=" + userId;
+    final apiUrl = Uri.parse(baseUrl + "Orders/getOrder?xuser_id=" + userId);
     var responseInfo = await client.get(apiUrl);
     if (responseInfo != null && responseInfo.statusCode == 200) {
       final resJson = jsonDecode(responseInfo.body);

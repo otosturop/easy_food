@@ -9,8 +9,8 @@ class MaterialApi {
   var client = http.Client();
 
   Future<MaterialModel> getMaterials(String customerId) async {
-    final apiUrl =
-        baseUrl + "Product/getProductMaterial?xcustomer_id=" + customerId;
+    final apiUrl = Uri.parse(
+        baseUrl + "Product/getProductMaterial?xcustomer_id=" + customerId);
 
     var responseMaterials = await client.get(apiUrl);
     if (responseMaterials != null && responseMaterials.statusCode == 200) {

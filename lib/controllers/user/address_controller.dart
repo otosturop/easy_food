@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AddressController extends GetxController {
   var selectedCounties = List<AdressData>.empty().obs;
   var allAddress = List<AddData>.empty().obs;
+  var firstAddress = AddData().obs;
   var selectedAreas = List<Data>.empty().obs;
   var selectedNeighborhoods = List<Neighborhood>.empty().obs;
   var loadingCounties = false.obs;
@@ -48,7 +49,7 @@ class AddressController extends GetxController {
   @override
   void onInit() async {
     String userId = await getUserId();
-    if (userId.isNotEmpty) {
+    if (isLogin.value) {
       getAllAddress(userId);
       getCounties("7");
     }
@@ -130,7 +131,14 @@ class AddressController extends GetxController {
       }
     } finally {
       loadingAllAddress(true);
+      firstAddress(
+          allAddress.firstWhere((e) => e.userId == userId, orElse: () => null));
     }
+  }
+
+  void selectNewAddres(String id) {
+    firstAddress(allAddress.firstWhere((e) => e.frmUserAdressId == id,
+        orElse: () => null));
   }
 
   Future<void> getNeighborhood(areaId) async {

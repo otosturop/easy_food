@@ -1,6 +1,6 @@
 import 'package:easy_food/controllers/product/basket_controller.dart';
-import 'package:easy_food/ui/appBarBasket.dart';
-import 'package:easy_food/ui/foundation_button.dart';
+import 'package:easy_food/components/appBarBasket.dart';
+import 'package:easy_food/components/foundation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_food/controllers/product/menu_controller.dart';
 import 'package:easy_food/controllers/product/product_controller.dart';
@@ -95,7 +95,7 @@ class _FoodDetailState extends State<FoodDetail> {
             Navigator.of(context).pop();
           },
         ),
-        title: Text('Product Detail',
+        title: Text('Ürün Detayı',
             style: TextStyle(
                 fontFamily: 'Varela',
                 fontSize: 20.0,
@@ -289,21 +289,24 @@ class _FoodDetailState extends State<FoodDetail> {
                   widget.product.productMaterials == "") &&
               widget.product.isMenu)
             Expanded(
-              flex: 7,
+              flex: 5,
               child: Obx(() {
                 if (menuController.isLoading.value) {
                   return Center(child: CircularProgressIndicator());
                 } else {
                   return Column(children: [
-                    Text(
-                      'Menu Seçimleri',
-                      style: TextStyle(
-                          fontFamily: 'Varela',
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.bold),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: Text(
+                        'Menu Seçimleri',
+                        style: TextStyle(
+                            fontFamily: 'Varela',
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8.0),
+                      padding: EdgeInsets.only(left: 8.0, right: 8.0),
                       child: Container(
                           width: Get.width * 0.9,
                           child: Obx(() {

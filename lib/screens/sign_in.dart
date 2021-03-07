@@ -1,6 +1,6 @@
 import 'package:easy_food/controllers/authentication_controller.dart';
-import 'package:easy_food/ui/foundation_button.dart';
-import 'package:easy_food/ui/social_log_in_button.dart';
+import 'package:easy_food/components/foundation_button.dart';
+import 'package:easy_food/components/social_log_in_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

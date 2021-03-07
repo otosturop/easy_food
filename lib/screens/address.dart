@@ -1,6 +1,6 @@
 import 'package:easy_food/controllers/user/address_controller.dart';
 import 'package:easy_food/screens/sign_in.dart';
-import 'package:easy_food/ui/foundation_button.dart';
+import 'package:easy_food/components/foundation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -89,32 +89,55 @@ class Address extends StatelessWidget {
                               child: Column(
                                 children: [
                                   ListTile(
-                                    trailing: IconButton(
-                                      icon: Icon(
-                                        Icons.delete_forever,
-                                        size: 28.0,
+                                      trailing: IconButton(
+                                        icon: Icon(
+                                          Icons.delete_forever,
+                                          size: 28.0,
+                                        ),
+                                        onPressed: () => addressController
+                                            .removeAddress(i.frmUserAdressId),
                                       ),
-                                      onPressed: () => addressController
-                                          .removeAddress(i.frmUserAdressId),
-                                    ),
-                                    leading: IconButton(
-                                      icon: Icon(
-                                        Icons.edit,
-                                        size: 28.0,
+                                      leading: IconButton(
+                                        icon: Icon(
+                                          Icons.edit,
+                                          size: 28.0,
+                                        ),
+                                        onPressed: () => addressController
+                                            .addAdressStatusChange(
+                                                i.frmUserAdressId,
+                                                type: i.addressType),
                                       ),
-                                      onPressed: () => addressController
-                                          .addAdressStatusChange(
-                                              i.frmUserAdressId,
-                                              type: i.addressType),
-                                    ),
-                                    title: Center(
-                                      child: Text(
-                                        i.addressTypeQw,
-                                        style:
-                                            context.theme.textTheme.headline5,
-                                      ),
-                                    ),
-                                  ),
+                                      title: Obx(() {
+                                        if (i.frmUserAdressId ==
+                                            addressController.firstAddress.value
+                                                .frmUserAdressId) {
+                                          return Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                i.addressTypeQw,
+                                                style: context
+                                                    .theme.textTheme.headline5,
+                                              ),
+                                              Icon(
+                                                Icons.check_circle,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onSecondary,
+                                              )
+                                            ],
+                                          );
+                                        } else {
+                                          return Center(
+                                            child: Text(
+                                              i.addressTypeQw,
+                                              style: context
+                                                  .theme.textTheme.headline5,
+                                            ),
+                                          );
+                                        }
+                                      })),
                                   Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Text(i.complateAddress),

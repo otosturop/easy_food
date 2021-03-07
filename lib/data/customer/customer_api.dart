@@ -11,7 +11,7 @@ class CustomerApi {
   var client = http.Client();
 
   Future<CustomerModel> getCustomers() async {
-    final apiUrl = baseUrl + "Customer/getCustomerList";
+    final apiUrl = Uri.parse(baseUrl + "Customer/getCustomerList");
     var responseCustomers = await client.get(apiUrl);
     if (responseCustomers != null && responseCustomers.statusCode == 200) {
       final resJson = jsonDecode(responseCustomers.body);
@@ -22,8 +22,8 @@ class CustomerApi {
   }
 
   Future<CustomerInfoModel> customerInfo(customerId) async {
-    final apiUrl =
-        baseUrl + "Customer/getCustomerInfo?xcustomer_id=" + customerId;
+    final apiUrl = Uri.parse(
+        baseUrl + "Customer/getCustomerInfo?xcustomer_id=" + customerId);
     var responseCustomer = await client.get(apiUrl);
     if (responseCustomer != null && responseCustomer.statusCode == 200) {
       final resJson = jsonDecode(responseCustomer.body);
@@ -34,7 +34,7 @@ class CustomerApi {
   }
 
   Future<PaymentMethodModel> getPaymentMethod() async {
-    final apiUrl = baseUrl + "Customer/getPaymentMethod";
+    final apiUrl = Uri.parse(baseUrl + "Customer/getPaymentMethod");
     var responsePayment = await client.get(apiUrl);
     if (responsePayment != null && responsePayment.statusCode == 200) {
       final resJson = jsonDecode(responsePayment.body);

@@ -24,7 +24,7 @@ class OrdersHistoryController extends GetxController {
   @override
   void onInit() async {
     String userId = await getUserId();
-    if (userId.isNotEmpty) getOrdersHistory(userId);
+    if (isLogin.value) getOrdersHistory(userId);
     super.onInit();
   }
 

@@ -3,7 +3,7 @@ import 'package:easy_food/controllers/product/product_controller.dart';
 import 'package:easy_food/controllers/user/address_controller.dart';
 import 'package:easy_food/screens/success_order.dart';
 import 'package:easy_food/screens/sign_in.dart';
-import 'package:easy_food/ui/foundation_button.dart';
+import 'package:easy_food/components/foundation_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';

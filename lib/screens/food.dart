@@ -1,9 +1,9 @@
 import 'package:easy_food/controllers/customer/customer_controller.dart';
 import 'package:easy_food/controllers/product/basket_controller.dart';
 import 'package:easy_food/controllers/product/category_controller.dart';
-import 'package:easy_food/ui/appBarBasket.dart';
+import 'package:easy_food/components/appBarBasket.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_food/ui/food_item.dart';
+import 'package:easy_food/components/food_item.dart';
 import 'package:get/get.dart';
 
 class Food extends StatefulWidget {

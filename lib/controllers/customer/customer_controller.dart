@@ -4,10 +4,12 @@ import 'package:easy_food/model/customer/CustomerInfoModel.dart';
 import 'package:easy_food/model/customer/PaymentMethodModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomerController extends GetxController {
   var isLoading = true.obs;
   var isLoadingPayment = true.obs;
+  var isLogin = false.obs;
   var allCustomers = List<Data>.empty().obs;
   var customer = List<Info>.empty().obs;
   var paymentMethod = List<Payment>.empty().obs;
@@ -20,6 +22,18 @@ class CustomerController extends GetxController {
     getPaymentMethod();
     fetchCustomers();
     super.onInit();
+  }
+
+  Future getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (!prefs.containsKey('token')) {
+      isLogin.value = false;
+    } else {
+      isLogin.value = true;
+      update();
+      String userId = prefs.getString('userId');
+      return userId;
+    }
   }
 
   Future<void> fetchCustomers() async {

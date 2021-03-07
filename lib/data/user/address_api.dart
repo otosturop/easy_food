@@ -14,7 +14,7 @@ class AddressApi {
   final Map<String, String> headers = {"content-type": "application/json"};
 
   Future<AddressModel> getCounties(cityId) async {
-    final apiUrl = baseUrl + "Address/getCounties?xcityid=" + cityId;
+    final apiUrl = Uri.parse(baseUrl + "Address/getCounties?xcityid=" + cityId);
     var responseCounties = await client.get(apiUrl);
     if (responseCounties != null && responseCounties.statusCode == 200) {
       final resJson = jsonDecode(responseCounties.body);
@@ -25,7 +25,8 @@ class AddressApi {
   }
 
   Future<AllAddressModel> getAllAdress(userId) async {
-    final apiUrl = baseUrl + "Users/getUserAddress?xuser_id=" + userId;
+    final apiUrl =
+        Uri.parse(baseUrl + "Users/getUserAddress?xuser_id=" + userId);
     var responseAllAddress = await client.get(apiUrl);
     if (responseAllAddress != null && responseAllAddress.statusCode == 200) {
       final resJson = jsonDecode(responseAllAddress.body);
@@ -36,7 +37,8 @@ class AddressApi {
   }
 
   Future<NeighborhoodModel> getNeighborhood(areaId) async {
-    final apiUrl = baseUrl + "Address/getNeighborhoods?xareaid=" + areaId;
+    final apiUrl =
+        Uri.parse(baseUrl + "Address/getNeighborhoods?xareaid=" + areaId);
     var responseNeighborhood = await client.get(apiUrl);
     if (responseNeighborhood != null &&
         responseNeighborhood.statusCode == 200) {
@@ -49,7 +51,7 @@ class AddressApi {
 
   Future<AddAddressModel> addAddress(userId, addressType, textAddress, cityId,
       countiesId, areaId, neighborhoodId) async {
-    final apiUrl = baseUrl + "Users/addUserAddress";
+    final apiUrl = Uri.parse(baseUrl + "Users/addUserAddress");
     final postBody = jsonEncode({
       'user_id': userId,
       "address_type": addressType,
@@ -71,7 +73,7 @@ class AddressApi {
 
   Future<AddAddressModel> updateAddress(addressId, userId, addressType,
       textAddress, cityId, countiesId, areaId, neighborhoodId) async {
-    final apiUrl = baseUrl + "Users/updateUserAddress";
+    final apiUrl = Uri.parse(baseUrl + "Users/updateUserAddress");
     final postBody = jsonEncode({
       'tfrm_user_adress_id': addressId,
       'user_id': userId,
@@ -93,7 +95,7 @@ class AddressApi {
   }
 
   Future<RemoveAddressModel> removeAddress(userAddressId) async {
-    final apiUrl = baseUrl + "Users/deleteUserAddress";
+    final apiUrl = Uri.parse(baseUrl + "Users/deleteUserAddress");
     final postBody = {
       'tfrm_user_adress_id': userAddressId,
     };

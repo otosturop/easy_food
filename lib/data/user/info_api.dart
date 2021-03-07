@@ -11,7 +11,7 @@ class Infoapi {
   final Map<String, String> headers = {"content-type": "application/json"};
 
   Future<UserInfoModel> getUserInfo(userId) async {
-    final apiUrl = baseUrl + "Users/getUserInfo?xuser_id=" + userId;
+    final apiUrl = Uri.parse(baseUrl + "Users/getUserInfo?xuser_id=" + userId);
     var responseInfo = await client.get(apiUrl);
     if (responseInfo != null && responseInfo.statusCode == 200) {
       final resJson = jsonDecode(responseInfo.body);
@@ -23,7 +23,7 @@ class Infoapi {
 
   Future<UpdateUserInfoModel> updateUserInfo(
       userId, fullName, userName, email, phone) async {
-    final apiUrl = baseUrl + "Users/updateUser";
+    final apiUrl = Uri.parse(baseUrl + "Users/updateUser");
     final postBody = jsonEncode({
       'tuser_id': userId,
       "full_name": fullName,

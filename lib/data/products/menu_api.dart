@@ -9,8 +9,8 @@ class MenuApi {
   var client = http.Client();
 
   Future<MenuMaterialModel> getMenus(String productId) async {
-    final apiUrl =
-        baseUrl + "Product/getProductDetailList?xproduct_id=" + productId;
+    final apiUrl = Uri.parse(
+        baseUrl + "Product/getProductDetailList?xproduct_id=" + productId);
 
     var responseMenu = await client.get(apiUrl);
     if (responseMenu != null && responseMenu.statusCode == 200) {
