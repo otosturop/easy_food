@@ -14,7 +14,6 @@ class BasketController extends GetxController {
   OrdersApi _api = OrdersApi();
   String orderNote;
   var complateOrder = false.obs;
-  var addressId = RxString(null);
   var paymentMethodId = RxString(null);
   var orderNumber = "".obs;
   final OrdersHistoryController order = Get.put(OrdersHistoryController());
@@ -36,8 +35,6 @@ class BasketController extends GetxController {
     String userId = prefs.getString('userId');
     return userId;
   }
-
-  void selectedAddress(adressId) => addressId.value = adressId;
 
   void setOrderNote(note) => orderNote = note;
 
@@ -84,11 +81,11 @@ class BasketController extends GetxController {
     myBasket.remove(tempRemove);
   }
 
-  Future<void> sendCartToServer(String totalPrice) async {
+  Future<void> sendCartToServer(String totalPrice, addressId) async {
     String userId = await getUserId();
-    print("adress: " + addressId.value);
+    print("id" + addressId);
     try {
-      var orderId = await _api.getOrderId(userId, addressId.value,
+      var orderId = await _api.getOrderId(userId, addressId,
           paymentMethodId.value, totalPrice, customerId.value, orderNote);
       orderNumber.value = orderId.outs.frmOrdersId.toString();
       myBasket.forEach((element) {

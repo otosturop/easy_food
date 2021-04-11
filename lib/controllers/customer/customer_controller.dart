@@ -11,6 +11,7 @@ class CustomerController extends GetxController {
   var isLoadingPayment = true.obs;
   var isLogin = false.obs;
   var allCustomers = List<Data>.empty().obs;
+  var filterCustomers = List<Data>.empty().obs;
   var customer = List<Info>.empty().obs;
   var paymentMethod = List<Payment>.empty().obs;
   CustomerApi _api = CustomerApi();
@@ -84,5 +85,15 @@ class CustomerController extends GetxController {
     var product =
         allCustomers.firstWhere((i) => i.frmCustomerId == customertId);
     return product;
+  }
+
+  matchCustomerAdress(neighborhoodId) {
+    filterCustomers.clear();
+    allCustomers.forEach((e) {
+      var addressIds = e.neighborhoodsId.split(',');
+      if (addressIds.contains(neighborhoodId)) {
+        filterCustomers.add(e);
+      }
+    });
   }
 }

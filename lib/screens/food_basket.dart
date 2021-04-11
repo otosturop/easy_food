@@ -24,9 +24,6 @@ class _FoodBasketState extends State<FoodBasket> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (!prefs.containsKey('token')) {
       Get.to(SignIn());
-    } else {
-      String userId = prefs.getString('userId');
-      addressController.getAllAddress(userId);
     }
   }
 

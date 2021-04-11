@@ -5,9 +5,21 @@ import 'package:easy_food/screens/food.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CustomerFilter extends StatelessWidget {
+class CustomerFilter extends StatefulWidget {
+  @override
+  _CustomerFilterState createState() => _CustomerFilterState();
+}
+
+class _CustomerFilterState extends State<CustomerFilter> {
   final CustomerController customerController = Get.put(CustomerController());
   final AddressController addressController = Get.put(AddressController());
+
+  @override
+  void initState() {
+    customerController.matchCustomerAdress(
+        addressController.firstAddress.value.neighborhoodsId);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +43,19 @@ class CustomerFilter extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          for (var i in customerController.allCustomers)
+          if (customerController.filterCustomers.length == 0)
+            Column(
+              children: [
+                SizedBox(height: 25),
+                Center(
+                  child: Icon(Icons.warning,
+                      size: 64, color: Theme.of(context).colorScheme.primary),
+                ),
+                SizedBox(height: 25),
+                Center(child: Text("Adresinize Uygun Restoran Bulunamadı.")),
+              ],
+            ),
+          for (var i in customerController.filterCustomers)
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Card(

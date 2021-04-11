@@ -33,12 +33,17 @@ class CartSelectBox extends StatelessWidget {
                               size: 48.0,
                             ),
                             onPressed: () => Get.to(SelectAddress())),
-                        leading: IconButton(
-                            icon: Icon(
-                              Icons.home_sharp,
-                              size: 48.0,
-                            ),
-                            onPressed: () {}),
+                        leading: addressController
+                                    .firstAddress.value.addressTypeQw ==
+                                "Ev"
+                            ? Icon(
+                                Icons.home,
+                                size: 48.0,
+                                color: Theme.of(context).colorScheme.secondary,
+                              )
+                            : Icon(Icons.work,
+                                size: 48.0,
+                                color: Theme.of(context).colorScheme.secondary),
                         title: Center(
                           child: Text(
                             addressController.firstAddress.value.addressTypeQw,

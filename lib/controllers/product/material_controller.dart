@@ -80,7 +80,7 @@ class MaterialController extends GetxController {
     var ids = extraMaterial.map((e) => e.id).toSet().toList();
     ids.forEach((item) {
       var tempEx = extraMaterial.firstWhere((ex) => ex.id == item);
-      print("name extramaterial: " + tempEx.name);
+      //print("name extramaterial: " + tempEx.name);
       var tempName = tempEx.name.split("-");
       tempEx.name = tempName[0].toString();
       selectedMaterial.add(tempEx);

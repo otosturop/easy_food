@@ -139,6 +139,7 @@ class AddressController extends GetxController {
   void selectNewAddres(String id) {
     firstAddress(allAddress.firstWhere((e) => e.frmUserAdressId == id,
         orElse: () => null));
+    update();
   }
 
   Future<void> getNeighborhood(areaId) async {

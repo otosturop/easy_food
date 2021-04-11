@@ -197,44 +197,42 @@ class _FoodDetailState extends State<FoodDetail> {
             Expanded(
               flex: 3,
               child: Obx(() {
-                if (materialController.isLoading.value) {
-                  return Center(child: CircularProgressIndicator());
+                if (materialController.filterMaterial.length > 0) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                            top: 5.0, bottom: 0, left: 16.0, right: 5.0),
+                        child: Text(
+                          'Malzemeler',
+                          style: TextStyle(
+                              fontFamily: 'Varela',
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.all(2.0),
+                        child: buildChipListTile(),
+                      ),
+                    ],
+                  );
                 } else {
-                  if (materialController.filterMaterial.length > 0) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: 5.0, bottom: 0, left: 16.0, right: 5.0),
-                          child: Text(
-                            'Malzemeler',
-                            style: TextStyle(
-                                fontFamily: 'Varela',
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.all(2.0),
-                          child: buildChipListTile(),
-                        ),
-                      ],
-                    );
-                  } else {
-                    return Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
+                  return Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Center(
                         child: Text(
                           "Malzeme Bulunamadı",
                           style:
                               TextStyle(fontFamily: 'Varela', fontSize: 14.0),
                         ),
                       ),
-                    );
-                  }
+                    ),
+                  );
                 }
               }),
             ),
